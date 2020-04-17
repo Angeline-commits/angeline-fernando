@@ -1,0 +1,19 @@
+<title>Research</title>
+<h1>Publications</h1>
+<p>-------------------------------------------</p>
+<h2>Peer-Reviewed</h2>
+<ol>
+<li>&nbsp;Haridasan, A. C., &amp; <span style="text-decoration: underline;">Fernando, A. G. (2018).</span> Online or in-store: unravelling consumer&rsquo;s channel choice motives. <em>Journal of Research in Interactive Marketing</em>, <em>12</em>(2), 215&ndash;230. <a href="https://doi.org/10.1108/JRIM-07-2017-0060">https://doi.org/10.1108/JRIM-07-2017-0060</a></li>
+<li>
+<p style="margin-left: 24pt; text-indent: -24.0pt;"><span style="text-decoration: underline;">Fernando, A. G</span>., Sivakumaran, B., &amp; Suganthi, L. (2018). Comparison of perceived acquisition value sought by online second-hand and new goods shoppers. <em>European Journal of Marketing</em>, <em>52</em>(7/8), 1412&ndash;1438. https://doi.org/10.1108/EJM-01-2017-0048</p>
+</li>
+<li>
+<p style="margin-left: 24pt; text-indent: -24.0pt;">F<span style="text-decoration: underline;">ernando, A. G</span>., Sivakumaran, B., &amp; Suganthi, L. (2016). Message involvement and attitude towards green advertisements. <em>Marketing Intelligence and Planning</em>. <a href="https://doi.org/10.1108/MIP-11-2015-0216">https://doi.org/10.1108/MIP-11-2015-0216</a></p>
+</li>
+<li>
+<p style="margin-left: 24pt; text-indent: -24.0pt;"><span style="text-decoration: underline;">Fernando, A. G.</span>, Sivakumaran, B., &amp; Suganthi, L. (2014). Nature of green advertisements in India: Are they greenwashed? <em>Asian Journal of Communication</em>, 1&ndash;20. <a href="https://doi.org/10.1080/01292986.2014.885537">https://doi.org/10.1080/01292986.2014.885537</a></p>
+</li>
+<li>
+<p style="margin-left: 24pt; text-indent: -24.0pt;"><span style="text-decoration: underline;">Fernando, A. G</span>., Suganthi, L., &amp; Sivakumaran, B. (2014). If you blog, will they follow? Using online media to set the agenda for consumer concerns on &ldquo;greenwashed&rdquo; environmental claims. <em>Journal of Advertising</em>. https://doi.org/10.1080/00913367.2013.841088</p>
+</li>
+</ol>

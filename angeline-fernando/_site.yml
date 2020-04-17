@@ -1,0 +1,23 @@
+
+name: "Angeline G Fernando"
+output_dir: "."
+navbar:
+  title: "Angeline G Fernando"
+  left:
+    - text: "Research"
+      href: research.html
+    - text: "Teaching"
+      href: teaching.html
+  right:
+    - icon: fa-envelope fa-lg
+      href: contact.html
+    - icon: fa-google 
+      href: https://scholar.google.com/citations?user=BprGSCkAAAAJ&hl=en
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/angelinegautami/
+output:
+  html_document:
+    theme: paper
+    include:
+      after_body: _footer.html
+    css: 'styles.css'
