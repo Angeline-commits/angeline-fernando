@@ -1,0 +1,50 @@
+---
+title: "Descriptive"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:/Users/User/anaconda3/python')
+py_install("pandas")
+
+
+```
+
+```{python, include=FALSE}
+import pandas as pd
+```
+
+```{python}
+
+###  Data Source: http://archive.ics.uci.edu/ml/datasets/Facebook+metrics   
+mydata=pd.read_csv('./data/dataset_Facebook.csv')
+type(mydata)
+mydata.shape
+```
+
+```{python}
+mydata.head(5)
+pd.set_option('display.max_columns',11)
+mydata.head(5)
+
+```
+
+```{python}
+mydata.isna().any()
+
+#Paid , like, share have missing values
+
+null_rows = mydata[mydata.isnull().any(axis=1)]
+null_rows
+mydata=mydata.dropna()
+mydata.shape
+
+#5 rows deleted
+
+mydata.describe()
+
+```
+
+
+
