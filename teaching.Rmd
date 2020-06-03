@@ -4,7 +4,13 @@
 
 <ul>
 <li>
-<p><strong>Descriptive Analytics-Simple Summary </strong>Descriptive Analytics-Simple Summary <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and  <a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Python code</a> </p>
+<p><strong>Descriptive Analytics-Simple Summary </strong>Descriptive Analytics-Simple Summary <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and  <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a> </p>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Descriptive Analytics-Univariate</strong>Univariate<a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and  <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a> </p>
 </li>
 </ul>
 

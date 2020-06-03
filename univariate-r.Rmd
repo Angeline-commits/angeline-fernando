@@ -1,0 +1,160 @@
+---
+title: "Univariate"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library("gridExtra")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exploratory Data Analysis
+### Simple frequency and plots for categorical variables
+```{r echo=FALSE}
+mydata<-read.csv("./data/dataset_Facebook.csv")
+summary(mydata)
+mydata$Category<-as.factor(mydata$Category)
+mydata$Type<-as.factor(mydata$Type)
+mydata$Post.Month<-as.factor(mydata$Post.Month)
+mydata$Post.Weekday<-as.factor(mydata$Post.Weekday)
+mydata$Post.Hour<-as.factor(mydata$Post.Hour)
+mydata$Paid<-as.factor(mydata$Paid)
+mydata<-na.omit(mydata) 
+```
+
+
+```{r message=FALSE,warning=FALSE, results='asis'}
+library(summarytools)
+freq(mydata$Category, plain.ascii = FALSE, style = "rmarkdown")
+```
+
+
+
+```{r echo=TRUE}
+library(ggplot2)
+
+p1<-ggplot(mydata,mapping = aes(x = Category, fill = Category))+geom_bar()
+p2<-ggplot(mydata,mapping = aes(x = Type, fill = Type))+geom_bar()
+
+
+p3<-ggplot(mydata, aes(Post.Month))+
+  geom_bar(fill = "blue") 
+p4<-ggplot(mydata, aes(Post.Hour))+
+  geom_bar(fill = "red") 
+
+grid.arrange(p1, p2,p3,p4 ,nrow = 2,ncol=2)
+```
+
+
+
+## Some observations 
+
+* Most of the posts are Category 1 () posts 
+
+* Most posts are video posts followed by status posts. Not many video posts 
+
+* October has the most posts
+
+* Early morning (post 12 AM) and 10 AM to 2 PM seem to be the preferred post timings
+
+## Questions arising from observing the graph above
+
+1. Do the brand engagement related variables (share,like,comment) differ based on post category, type , month,time,day of the post ?
+
+***
+
+
+### Continuous variables
+
+```{r results='asis'}
+
+library(summarytools)
+
+# descr is used to summarise the numerical variables in the data frame
+descr(mydata,transpose = TRUE,stats = c("mean","max","sd","skewness","kurtosis"))
+
+```
+
+
+
+#### Histograms
+
+```{r}
+
+p1 <- ggplot(data = mydata, mapping = aes(x = comment))+ geom_histogram(binsize = 0.5)
+
+p2 <- ggplot(data = mydata, mapping = aes(x = share))+ geom_histogram(bins = 10)
+
+p3 <- ggplot(data = mydata, mapping = aes(x = like))+ geom_histogram(bins = 10)
+
+
+p4 <- ggplot(data = mydata, mapping = aes(x = Lifetime.Post.Consumers))+ geom_histogram(bins = 10)
+
+grid.arrange(p1, p2,p3,p4 ,nrow = 2,ncol=2)
+
+
+```
+#### Box Plots
+
+```{r}
+b1<-ggplot(mydata, aes(x="share",y=share)) + 
+  geom_boxplot()
+b2<-ggplot(mydata, aes(x="like",y=like)) + 
+  geom_boxplot()
+b3<-ggplot(mydata, aes(x="comment",y=comment)) + 
+  geom_boxplot()
+b4<-ggplot(mydata, aes(x="Lifetime.Post.Consumers",y=Lifetime.Post.Consumers)) + 
+ geom_boxplot()+coord_cartesian(ylim=c(0,12000))+scale_y_continuous(breaks=seq(0,12000,1000))
+grid.arrange(b1, b2,b3,b4 ,nrow = 2,ncol=2)
+
+```
+
+##### Summary
+
+The histograms show that all the continuous variables are right-skewed.Most of the values are less than the mean val.
+
+1.Comments:Most of the posts have received close to 0 comments or have less than  hundred. There are a couple of posts which have comments more than 100.
+2.All the other brand engagement metrics(share,like and Lifetime.Post.Consumers) show a similar pattern.A box plot would helps us identify the outliers.
+Let's check this out next.
+
+```{r}
+a22 <- ggplot(mydata, aes(x = Category, y = comment)) +
+  geom_boxplot()
+a23 <- ggplot(mydata, aes(x = Type, y = comment)) +
+  geom_boxplot()
+a24 <- ggplot(mydata, aes(x = Paid, y = comment)) +
+  geom_boxplot()
+a25 <- ggplot(mydata, aes(x = Post.Hour, y = comment)) +
+  geom_boxplot()
+grid.arrange(a22, a23,a24,a25,nrow = 2,ncol=2)
+
+```
+
+
+##### Boxplots
+Plot1:
+Category 2(offer related posts) posts have generated the outlier.
+Nevertheless, we can not that contest and discounts will generate more comments.
+This should be verified by other relevant statistical tests.e.g. ANOVA
+
+***
+
+> Probability density Plots
+
+```{r}
+p1 <- ggplot(data = mydata, mapping = aes(x = comment))+ geom_density()
+
+
+p2 <- ggplot(data = mydata, mapping = aes(x = share))+ geom_density()
+
+p3 <- ggplot(data = mydata, mapping = aes(x = like))+ geom_density()
+
+
+p4 <- ggplot(data = mydata, mapping = aes(x = Lifetime.Post.Consumers))+ geom_density()
+p5 <- ggplot(data = mydata, mapping = aes(x = Lifetime.Post.Consumers))+ geom_density(alpha=0.3)
+
+grid.arrange(p1, p2,p5,p4 ,nrow = 2,ncol=2)
+
+```
+
