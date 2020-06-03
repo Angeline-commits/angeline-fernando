@@ -1,0 +1,87 @@
+---
+title: "Descriptive"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Simple pre-process
+
+This is an analysis based on the UCI dataset on Facebook performance metrics
+Data Source: http://archive.ics.uci.edu/ml/datasets/Facebook+metrics   
+
+Based on the paper:
+ (Moro et al., 2016) S. Moro, P. Rita and B. Vala. Predicting social media performance metrics and evaluation 
+   of the impact on brand building: A data mining approach. Journal of Business Research, Elsevier, In press.
+ 
+   Available at: http://dx.doi.org/10.1016/j.jbusres.2016.02.010
+   
+### Read dataset
+```{r read}
+mydata<-read.csv("./data/dataset_Facebook.csv")
+summary(mydata)
+
+```
+The summary shows that Type field is read as character and the rest of the fileds have not been read correctly.
+Change the columns appropriately.  
+
+### Convert categorical variables
+```{r}
+
+mydata$Category<-as.factor(mydata$Category)
+mydata$Type<-as.factor(mydata$Type)
+mydata$Post.Month<-as.factor(mydata$Post.Month)
+mydata$Post.Weekday<-as.factor(mydata$Post.Weekday)
+mydata$Post.Hour<-as.factor(mydata$Post.Hour)
+mydata$Paid<-as.factor(mydata$Paid)
+```
+```{r}
+summary(mydata)
+```
+Certain columns show NA counts. These are missing values 
+
+### Check the row numbers which hold NA values
+```{r}
+mydata[is.na(mydata$Paid),]
+mydata[is.na(mydata$like),]
+mydata[is.na(mydata$share),]
+```
+# Delete rows with NA
+```{r}
+mydata<-na.omit(mydata) 
+summary(mydata)
+
+```
+
+## Simple Summary Statistics
+
+```{r message=FALSE,warning=FALSE, results='asis'}
+library(summarytools)
+print(dfSummary(mydata), method = "render")
+        
+```
+
+## Summary 
+
+Variable Name          | Observations
+-------------          | -------------
+Category               | This refers to the category of post. Category 1 is action (special offers and contests) product                             (direct advertisement, explicit brand content),and inspiration (non-explicit brand related                                  content). The predominant content is offers and content (42.6%) .This is followed by non-explicit                           brand related content (31.3%).
+Page.total.likes       | On an average-each page gets around 123173 likes. The high s.d (16203) shows that the values of                             total likes is spread out from the mean i.e this variable has a high range for the values it takes.                          The minimum value is 81370 and the maximum is 139441. The median value (129600) is close to the                             mean indicating that there no significant outliers for this field.The graph shows a highly right                            skewed distribution of the variable.
+Type                   | Around 85% of posts are photos.  
+Post.Month             | Month the post was published (January, February, March, …,December).Needs to investigated further. 
+Post.Hour              | Hour the post was published (0, 1, 2, 3, 4, …, 23)..The frequency in the graph is shown only for 10                          categories. Needs to investigated further.
+Post.Weekday           | The data is for the 7 days of the week.Weekday the post was published (Sunday,                                              Monday,..Saturday).Most posts are published on Fridays and Sat, followed by Wed.
+Paid                   | Most of the messages are paid - 72%
+Lifetime.Post.Consumers| On an average-the lifetime value is  804.2.
+comment                | On an average a post received 8 comments.Median shows 3. The data may have outliers.Basically not                           many comments for a post. TheIQR also indicates that most posts receive low number of comments.
+like                   | On an average a post received 179 likes.Again the median and mean differ greatly. To be                                     investigated further.
+share                  | On an average a post received 27 shares.Again the median and mean differ greatly. To be                                     investigated further.
+
+
+
+
+
+
+
