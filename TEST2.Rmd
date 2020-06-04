@@ -1,20 +1,21 @@
 ---
-title: "Univariate"
-output: html_document
+title: "R Notebook"
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
+  
 ```{r setup,include=FALSE}
 library(reticulate)
 knitr::opts_chunk$set(echo = TRUE)
 use_virtualenv("r-reticulate")
-
 ```
 ```{python echo=TRUE}
-
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-mydata=pd.read_csv('./data/dataset_Facebook.csv')
+mydata=pd.read_csv('E:/Angeline/Teaching/business analytics/constant trials-2020/descriptive/dataset_Facebook.csv')
 type(mydata)
 mydata.shape
 
@@ -86,8 +87,8 @@ sns.barplot(mnth_count.index, mnth_count.values, alpha=0.9,ax = axes[1][0])
 sns.barplot(hr_count.index, hr_count.values, alpha=0.9,ax = axes[1][1])
 plt.show()
 
-
 ```
 
 
-
+ 
+ 
