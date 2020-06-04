@@ -1,0 +1,62 @@
+---
+title: "Univariate"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE)
+library(reticulate)
+reticulate::use_python("E:/Users/User/anaconda3/python.exe")
+
+```
+
+```{python, include=TRUE}
+
+import pandas as pd
+import seaborn as sns
+
+
+```
+
+```{python}
+
+###  Data Source: http://archive.ics.uci.edu/ml/datasets/Facebook+metrics   
+mydata=pd.read_csv('./data/dataset_Facebook.csv')
+type(mydata)
+mydata.shape
+```
+
+```{python}
+mydata.head(5)
+pd.set_option('display.max_columns',11)
+mydata.head(5)
+
+```
+
+```{python}
+mydata.isna().any()
+
+#Paid , like, share have missing values
+
+null_rows = mydata[mydata.isnull().any(axis=1)]
+null_rows
+mydata=mydata.dropna()
+mydata.shape
+
+#5 rows deleted
+
+mydata.describe()
+
+```
+
+```{python}
+py_config()
+category_count = mydata['Category'].value_counts()
+sns.set(style="darkgrid")
+sns.barplot(category_count.index, category_count.values, alpha=0.9)
+
+
+```
+
+
+
