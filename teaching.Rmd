@@ -10,7 +10,7 @@
 
 <ul>
 <li>
-<p><strong>Descriptive Analytics-Univariate</strong><a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and  <a href="univariate-python.html" target="_blank" rel="noopener">Python code</a> </p>
+<p><strong>Descriptive Analytics-Univariate</strong><a href="univariate-r.html" target="_blank" rel="noopener"> R code </a> and  <a href="univariate-python.html" target="_blank" rel="noopener">Python code</a> </p>
 </li>
 </ul>
 
