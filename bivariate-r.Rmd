@@ -1,0 +1,94 @@
+---
+title: "Bivariate"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 100)
+
+```
+```{r libload,message=FALSE}
+library(ggplot2)
+library(plyr)
+library(dplyr)
+library(gridExtra)
+```
+
+## Exploratory - Bivariate
+```{r, echo=FALSE,include=FALSE}
+mydata<-read.csv("./data/dataset_Facebook.csv")
+summary(mydata)
+mydata$Category<-as.factor(mydata$Category)
+mydata$Type<-as.factor(mydata$Type)
+mydata$Post.Month<-as.factor(mydata$Post.Month)
+mydata$Post.Weekday<-as.factor(mydata$Post.Weekday)
+mydata$Post.Hour<-as.factor(mydata$Post.Hour)
+mydata$Paid<-as.factor(mydata$Paid)
+mydata<-na.omit(mydata) 
+
+```
+
+1. Do the brand engagement related variables (share,like,comment) differ based on post category, type , month,time,day of the post ?
+
+```{r share, }
+p1<- ggplot() + geom_bar(aes(y = share, x = Category), data = mydata,stat="identity")+
+ggtitle("Category and Shares")
+
+
+p2<- ggplot() + geom_bar(aes(y = like, x = Category), data = mydata,stat="identity")
+
+
+p3<- ggplot() + geom_bar(aes(y = comment, x = Category), data = mydata,stat="identity")
+
+
+p4<- ggplot() + geom_bar(aes(y = Lifetime.Post.Consumers, x = Category), data = mydata,stat="identity")
+
+library("gridExtra")
+grid.arrange(p1, p2,p3,p4 ,nrow = 2,ncol=2)
+```
+
+***
+
+***
+
+
+```{r bi,message=FALSE}
+p11<- ggplot() + geom_bar(aes(y = share, x = Category,fill=Type), data = mydata,stat="identity")
+
+
+p12<- ggplot() + geom_bar(aes(y = like, x = Category,fill=Type), data = mydata,stat="identity")
+
+
+p13<- ggplot() + geom_bar(aes(y = comment, x = Category,fill=Type), data = mydata,stat="identity")
+
+newdf <- mydata %>% group_by(Category, Type) %>%
+  summarise(total_lifetime = sum(Lifetime.Post.Consumers)) %>%
+  mutate(total_lifetime_percent = 
+           round(100 * total_lifetime / sum(total_lifetime),1))
+
+
+newdf <- ddply(newdf, .(Category),transform,pos=cumsum(total_lifetime_percent)-
+                 (0.2*total_lifetime_percent))
+p14 <- ggplot(newdf, aes(x = Category, y = total_lifetime_percent,
+                         fill = Type, label = paste0(total_lifetime_percent,"%"))) +
+  geom_bar(stat = "identity") +
+  geom_text(size = 3, position = position_stack(vjust = 0.5))
+
+
+grid.arrange(p11, p12,p13,p14 ,nrow = 2,ncol=2)
+```
+
+```{r,message=FALSE}
+v1<-ggplot(mydata, aes(x = like, y = share)) +
+  geom_point()
+v2<-ggplot(mydata, aes(x = like, y = comment)) +
+  geom_point()
+v3<-ggplot(mydata, aes(x = share, y = comment)) +
+  geom_point()
+v4<-ggplot(mydata, aes(x = comment, y = Lifetime.Post.Consumers)) +geom_smooth(method = "lm", se = FALSE)+geom_point()
+
+
+grid.arrange(v1,v2,v3,v4 ,nrow = 2,ncol=2)
+```
+
