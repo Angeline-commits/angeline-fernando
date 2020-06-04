@@ -16,7 +16,7 @@
 
 <ul>
 <li>
-<p><strong>Descriptive Analytics-Bivariate </strong><a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and  <a>Python code</a> </p>
+<p><strong>Descriptive Analytics-Bivariate </strong><a href="bivariate-r.html" target="_blank" rel="noopener">R code </a> and  <a>Python code</a> </p>
 </li>
 </ul>
 
