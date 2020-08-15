@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Descriptive</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Angeline G Fernando</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://scholar.google.com/citations?user=BprGSCkAAAAJ&amp;hl=en">
+    <span class="fa fa-google"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/angelinegautami/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Descriptive</h1>
+
+</div>
+
+
+<div id="simple-pre-process" class="section level2">
+<h2>Simple pre-process</h2>
+<p>This is an analysis based on the UCI dataset on Facebook performance metrics Data Source: <a href="http://archive.ics.uci.edu/ml/datasets/Facebook+metrics" class="uri">http://archive.ics.uci.edu/ml/datasets/Facebook+metrics</a></p>
+<p>Based on the paper: (Moro et al., 2016) S. Moro, P. Rita and B. Vala. Predicting social media performance metrics and evaluation of the impact on brand building: A data mining approach. Journal of Business Research, Elsevier, In press.</p>
+<p>Available at: <a href="http://dx.doi.org/10.1016/j.jbusres.2016.02.010" class="uri">http://dx.doi.org/10.1016/j.jbusres.2016.02.010</a></p>
+<div id="read-dataset" class="section level3">
+<h3>Read dataset</h3>
+<pre class="r"><code>mydata&lt;-read.csv(&quot;./data/dataset_Facebook.csv&quot;)
+summary(mydata)</code></pre>
+<pre><code>##     Category    Page.total.likes     Type             Post.Month       Post.Hour      Post.Weekday 
+##  Min.   :1.00   Min.   : 81370   Length:500         Min.   : 1.000   Min.   : 1.00   Min.   :1.00  
+##  1st Qu.:1.00   1st Qu.:112676   Class :character   1st Qu.: 4.000   1st Qu.: 3.00   1st Qu.:2.00  
+##  Median :2.00   Median :129600   Mode  :character   Median : 7.000   Median : 9.00   Median :4.00  
+##  Mean   :1.88   Mean   :123194                      Mean   : 7.038   Mean   : 7.84   Mean   :4.15  
+##  3rd Qu.:3.00   3rd Qu.:136393                      3rd Qu.:10.000   3rd Qu.:11.00   3rd Qu.:6.00  
+##  Max.   :3.00   Max.   :139441                      Max.   :12.000   Max.   :23.00   Max.   :7.00  
+##                                                                                                    
+##       Paid        Lifetime.Post.Consumers    comment             like            share       
+##  Min.   :0.0000   Min.   :    9.0         Min.   :  0.000   Min.   :   0.0   Min.   :  0.00  
+##  1st Qu.:0.0000   1st Qu.:  332.5         1st Qu.:  1.000   1st Qu.:  56.5   1st Qu.: 10.00  
+##  Median :0.0000   Median :  551.5         Median :  3.000   Median : 101.0   Median : 19.00  
+##  Mean   :0.2786   Mean   :  798.8         Mean   :  7.482   Mean   : 177.9   Mean   : 27.27  
+##  3rd Qu.:1.0000   3rd Qu.:  955.5         3rd Qu.:  7.000   3rd Qu.: 187.5   3rd Qu.: 32.25  
+##  Max.   :1.0000   Max.   :11328.0         Max.   :372.000   Max.   :5172.0   Max.   :790.00  
+##  NA&#39;s   :1                                                  NA&#39;s   :1        NA&#39;s   :4</code></pre>
+<p>The summary shows that Type field is read as character and the rest of the fileds have not been read correctly. Change the columns appropriately.</p>
+</div>
+<div id="convert-categorical-variables" class="section level3">
+<h3>Convert categorical variables</h3>
+<pre class="r"><code>mydata$Category&lt;-as.factor(mydata$Category)
+mydata$Type&lt;-as.factor(mydata$Type)
+mydata$Post.Month&lt;-as.factor(mydata$Post.Month)
+mydata$Post.Weekday&lt;-as.factor(mydata$Post.Weekday)
+mydata$Post.Hour&lt;-as.factor(mydata$Post.Hour)
+mydata$Paid&lt;-as.factor(mydata$Paid)</code></pre>
+<pre class="r"><code>summary(mydata)</code></pre>
+<pre><code>##  Category Page.total.likes     Type       Post.Month    Post.Hour   Post.Weekday   Paid    
+##  1:215    Min.   : 81370   Link  : 22   10     : 60   3      :105   1:68         0   :360  
+##  2:130    1st Qu.:112676   Photo :426   7      : 52   10     : 78   2:66         1   :139  
+##  3:155    Median :129600   Status: 45   4      : 50   13     : 52   3:64         NA&#39;s:  1  
+##           Mean   :123194   Video :  7   12     : 50   11     : 44   4:72                   
+##           3rd Qu.:136393                6      : 49   2      : 39   5:67                   
+##           Max.   :139441                11     : 45   4      : 35   6:81                   
+##                                         (Other):194   (Other):147   7:82                   
+##  Lifetime.Post.Consumers    comment             like            share       
+##  Min.   :    9.0         Min.   :  0.000   Min.   :   0.0   Min.   :  0.00  
+##  1st Qu.:  332.5         1st Qu.:  1.000   1st Qu.:  56.5   1st Qu.: 10.00  
+##  Median :  551.5         Median :  3.000   Median : 101.0   Median : 19.00  
+##  Mean   :  798.8         Mean   :  7.482   Mean   : 177.9   Mean   : 27.27  
+##  3rd Qu.:  955.5         3rd Qu.:  7.000   3rd Qu.: 187.5   3rd Qu.: 32.25  
+##  Max.   :11328.0         Max.   :372.000   Max.   :5172.0   Max.   :790.00  
+##                                            NA&#39;s   :1        NA&#39;s   :4</code></pre>
+<p>Certain columns show NA counts. These are missing values</p>
+</div>
+<div id="check-the-row-numbers-which-hold-na-values" class="section level3">
+<h3>Check the row numbers which hold NA values</h3>
+<pre class="r"><code>mydata[is.na(mydata$Paid),]</code></pre>
+<pre><code>##     Category Page.total.likes  Type Post.Month Post.Hour Post.Weekday Paid Lifetime.Post.Consumers
+## 500        2            81370 Photo          1         4            4 &lt;NA&gt;                     524
+##     comment like share
+## 500       0   91    28</code></pre>
+<pre class="r"><code>mydata[is.na(mydata$like),]</code></pre>
+<pre><code>##     Category Page.total.likes  Type Post.Month Post.Hour Post.Weekday Paid Lifetime.Post.Consumers
+## 112        1           136736 Photo         10         8            6    0                      37
+##     comment like share
+## 112       0   NA    NA</code></pre>
+<pre class="r"><code>mydata[is.na(mydata$share),]</code></pre>
+<pre><code>##     Category Page.total.likes  Type Post.Month Post.Hour Post.Weekday Paid Lifetime.Post.Consumers
+## 112        1           136736 Photo         10         8            6    0                      37
+## 121        1           136393 Photo         10         9            7    0                     271
+## 125        1           136393 Photo         10         6            7    0                     246
+## 165        1           135428 Photo          9        10            5    0                     251
+##     comment like share
+## 112       0   NA    NA
+## 121       0    2    NA
+## 125       0    7    NA
+## 165       0   18    NA</code></pre>
+</div>
+</div>
+<div id="delete-rows-with-na" class="section level1">
+<h1>Delete rows with NA</h1>
+<pre class="r"><code>mydata&lt;-na.omit(mydata) 
+summary(mydata)</code></pre>
+<pre><code>##  Category Page.total.likes     Type       Post.Month    Post.Hour   Post.Weekday Paid   
+##  1:211    Min.   : 81370   Link  : 22   10     : 57   3      :105   1:68         0:356  
+##  2:129    1st Qu.:112324   Photo :421   7      : 52   10     : 77   2:66         1:139  
+##  3:155    Median :129600   Status: 45   4      : 50   13     : 52   3:64                
+##           Mean   :123173   Video :  7   12     : 50   11     : 44   4:71                
+##           3rd Qu.:136393                6      : 49   2      : 39   5:66                
+##           Max.   :139441                11     : 45   4      : 34   6:80                
+##                                         (Other):192   (Other):144   7:80                
+##  Lifetime.Post.Consumers    comment             like            share       
+##  Min.   :    9.0         Min.   :  0.000   Min.   :   0.0   Min.   :  0.00  
+##  1st Qu.:  335.0         1st Qu.:  1.000   1st Qu.:  57.0   1st Qu.: 10.00  
+##  Median :  555.0         Median :  3.000   Median : 101.0   Median : 19.00  
+##  Mean   :  804.2         Mean   :  7.558   Mean   : 179.1   Mean   : 27.26  
+##  3rd Qu.:  969.0         3rd Qu.:  7.000   3rd Qu.: 188.0   3rd Qu.: 32.50  
+##  Max.   :11328.0         Max.   :372.000   Max.   :5172.0   Max.   :790.00  
+## </code></pre>
+<div id="simple-summary-statistics" class="section level2">
+<h2>Simple Summary Statistics</h2>
+<pre class="r"><code>library(summarytools)
+print(dfSummary(mydata), method = &quot;render&quot;)</code></pre>
+<div class="container st-container">
+<h3>Data Frame Summary</h3>
+<h4></h4>
+<strong>Dimensions</strong>: 495 x 11
+  <br/><strong>Duplicates</strong>: 0
+<br/>
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+  <thead>
+    <tr>
+      <th align="center" class="st-protect-top-border"><strong>No</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Variable</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Stats / Values</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Freqs (% of Valid)</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Graph</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Valid</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Missing</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">1</td>
+      <td align="left">Category
+[factor]</td>
+      <td align="left">1. 1
+2. 2
+3. 3</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">211</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">42.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">129</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">26.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">155</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">31.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEwAAABQBAMAAABBrY74AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAFFJREFUSMdjYBjcQIkAgCpTNsYLjEaVjSob8sqIzAuCBMBAKsPmbCzKsASI0aiyUWUjURmRWYbIDDggynAVWIQDBCVQRpWNKhvyyojMC4MVAABwW2G+b0QyhwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMGFGjfMAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDAQGzVPAAAAAElFTkSuQmCC"></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">2</td>
+      <td align="left">Page.total.likes
+[integer]</td>
+      <td align="left">Mean (sd) : 123173.3 (16203.8)
+min < med < max:
+81370 < 129600 < 139441
+IQR (CV) : 24069 (0.1)</td>
+      <td align="left" style="vertical-align:middle">90 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAJ5JREFUaN7t2FsKgCAQhWG3UEvIHdT+9xaNggfCB52hKP7zqn6Id0yJzGTxZd0sQdhxZQcDAwMDAwMDAwMDAwMDAwMDA3sHK59dQVg2BgxMUlZYEGbMAQZmqX/1QVhp9UtMxqlibVcOY7n1pmKNeRLT2fdjMsZ6ZLkxrT+K6e3sxrQALADT2RnFOttvDuvU/zZ2fzc4sE4rT8+8SWQmJwtAsVqXOKtjAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwYUaN8wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMBAbNU8AAAAASUVORK5CYII="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">3</td>
+      <td align="left">Type
+[factor]</td>
+      <td align="left">1. Link
+2. Photo
+3. Status
+4. Video</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">22</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">4.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">421</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">85.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">45</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">9.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">7</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">1.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIwAAABoBAMAAADROwWZAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAHNJREFUWMPt1zEOQBEQhGFXcIS3bsD976Yg0cgrdrYQ/ul9hUlGpET+YmZfFjKZ0hoMDAwMjJcJ2mKFuJ0xMatwJRUGBgbmaSZoi896YM5i5k2pzCi8wsDAwMB4mKAtdp9/gNG+z6twGBgYGBg/E7TFZJ8O5t1dETPl1GQAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDBhRo3zAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwEBs1TwAAAABJRU5ErkJggg=="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">4</td>
+      <td align="left">Post.Month
+[factor]</td>
+      <td align="left">1. 1
+2. 2
+3. 3
+4. 4
+5. 5
+6. 6
+7. 7
+8. 8
+9. 9
+10. 10
+[ 2 others ]</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">24</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">4.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">26</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">5.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">36</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">7.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">50</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">10.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">37</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">7.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">49</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">9.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">52</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">10.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">34</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">35</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">7.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">57</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">11.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">95</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">19.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACkAAAESBAMAAACShOEfAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAKFJREFUWMPtlMENgCAQBClBOxDsQPrvTUUFIRt8wCUn2X3Oh012OGPk4o7MMdNNV+83Us0U7zZn6UfP1yxq5kk1U7xbHx+Sf+8OyVVSfRTv1u5DzZLnvaxZ7Eaqj+Ldevmg8V+Q1qjU1eB9GInKXg1a8jcq6oMtaehAqpji3dp9oCUjUSlLXHaOsg7xdJHqo3i3dh8+LAlZimZXSPVRvJtEdgAUzS4lDiYfAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwYUaN8wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMBAbNU8AAAAASUVORK5CYII="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">5</td>
+      <td align="left">Post.Hour
+[factor]</td>
+      <td align="left">1. 1
+2. 2
+3. 3
+4. 4
+5. 5
+6. 6
+7. 7
+8. 8
+9. 9
+10. 10
+[ 12 others ]</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">0.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">39</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">7.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">105</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">21.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">34</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">13</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">2.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">15</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">3.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">13</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">2.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">11</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">2.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">29</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">5.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">77</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">155</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">31.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADwAAAESBAMAAABTA6uzAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAK9JREFUaN7t2MENgzAMRmFW8AhJNgj774baQ0tDjAtxsUTff/0uQXo5hGmKXZb+YPhilkDOzyWNy/wYDDuw0Zooc+z8ve7JX6swfJqN1n7a+TfXIKlc+vcXho+z0Zooc+o87XGZYdiJjdZEGZ3Dd2KuAfwPHNv5LpcKw05stCYSxx+v6s6Hrd/kMDzCRmuizK/z5idSc/L2FxQMn2KjtbGQxzgr237YehWGD7PRWtQWQu9t6VmoJuMAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDBhRo3zAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwEBs1TwAAAABJRU5ErkJggg=="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">6</td>
+      <td align="left">Post.Weekday
+[factor]</td>
+      <td align="left">1. 1
+2. 2
+3. 3
+4. 4
+5. 5
+6. 6
+7. 7</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">68</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">13.7%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">66</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">13.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">64</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">12.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">71</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">14.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">66</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">13.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">80</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">80</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACUAAACwBAMAAAB6G7rAAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAGZJREFUSMft1MEJACEMRFFLMB2s2Q5M/715UVlwEBZCEJk5vlPgiyn5T+eK5G6vjdGiDfWQz/4a+55l3n33zWW9pdKiDfXw6avgrVXaAYYa8R+/x2L/cdVnucWMFmuoB/veY6iH5xovZ1cnqGW5QwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMGFGjfMAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDAQGzVPAAAAAElFTkSuQmCC"></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">7</td>
+      <td align="left">Paid
+[factor]</td>
+      <td align="left">1. 0
+2. 1</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">356</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">71.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">139</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">28.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHgAAAA4BAMAAADEEiGNAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAENJREFUSMdjYBiZQIksANWsbEwGMBrVPKp5VPOo5sGhmaICUJAsMLQ1Yw0PRSI1Y42qUc2jmkc1j2oeIpopKgBHGgAA2H18KoSpRfsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDBhRo3zAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwEBs1TwAAAABJRU5ErkJggg=="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">8</td>
+      <td align="left">Lifetime.Post.Consumers
+[integer]</td>
+      <td align="left">Mean (sd) : 804.2 (885.2)
+min < med < max:
+9 < 555 < 11328
+IQR (CV) : 634 (1.1)</td>
+      <td align="left" style="vertical-align:middle">418 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAGVJREFUaN7t2LENgDAMAMGswAgJG5D9d4sISDQ0GEsU3BcuT65cuBRFarO6vOvE1r4Hg8FgMBgMBoPBYDAYDAaDwWAwGCwLOx75SdicGwwGg32Ixa/aDdbD+/0da1f1IdZSKoo0AGadQpTwfAiVAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwYUaN8wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMBAbNU8AAAAASUVORK5CYII="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">9</td>
+      <td align="left">comment
+[integer]</td>
+      <td align="left">Mean (sd) : 7.6 (21.3)
+min < med < max:
+0 < 3 < 372
+IQR (CV) : 6 (2.8)</td>
+      <td align="left" style="vertical-align:middle">46 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAE1JREFUaN7t2UEBABAQAMGrIAIi6N/N5wiAh8dsgCmwETqprWq5KLE+MhgMBoPBYDAYDAaDwWAwGAwGg8FgMBgMBoN9he05fIG1J4VOmsAjV6OIoXSlAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwYUaN8wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMBAbNU8AAAAASUVORK5CYII="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">10</td>
+      <td align="left">like
+[integer]</td>
+      <td align="left">Mean (sd) : 179.1 (324.4)
+min < med < max:
+0 < 101 < 5172
+IQR (CV) : 131 (1.8)</td>
+      <td align="left" style="vertical-align:middle">257 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAFpJREFUaN7t2cEJwCAQRNFtIS1oB0n/vYnoJdfdIATeL+Ax94lQpra6am2sP7MbBoPBYDAYDAaDwWAwGAwGg8FgMBgMBoPB/oIVL9M3Vtx3CEvcxBtrnxTKNAB2qjjy0T+fAwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMC0wOC0xNVQxOTowODo0MyswNjowMGFGjfMAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDAQGzVPAAAAAElFTkSuQmCC"></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">11</td>
+      <td align="left">share
+[integer]</td>
+      <td align="left">Mean (sd) : 27.3 (42.7)
+min < med < max:
+0 < 19 < 790
+IQR (CV) : 22.5 (1.6)</td>
+      <td align="left" style="vertical-align:middle">88 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5AgQAQgrRM/2FQAAAFJJREFUaN7t2bEBABAQBMFvQQnogP57k6AAL5yNLpoGLkIvtVMtiTbW5w4Gg8FgMBgMBoPBYDAYDAaDwWAwGAwGg8FgWez+uT+wM0YCa18KvbQAw4dYtGXsvPIAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDgtMTVUMTk6MDg6NDMrMDY6MDBhRo3zAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTA4LTE1VDE5OjA4OjQzKzA2OjAwEBs1TwAAAABJRU5ErkJggg=="></td>
+      <td align="center">495
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+  </tbody>
+</table>
+<p>Generated by <a href='https://github.com/dcomtois/summarytools'>summarytools</a> 0.9.6 (<a href='https://www.r-project.org/'>R</a> version 4.0.0)<br/>2020-08-15</p>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable Name</th>
+<th>Observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Category</td>
+<td>This refers to the category of post. Category 1 is action (special offers and contests) product (direct advertisement, explicit brand content),and inspiration (non-explicit brand related content). The predominant content is offers and content (42.6%) .This is followed by non-explicit brand related content (31.3%).</td>
+</tr>
+<tr class="even">
+<td>Page.total.likes</td>
+<td>On an average-each page gets around 123173 likes. The high s.d (16203) shows that the values of total likes is spread out from the mean i.e this variable has a high range for the values it takes. The minimum value is 81370 and the maximum is 139441. The median value (129600) is close to the mean indicating that there no significant outliers for this field.The graph shows a highly right skewed distribution of the variable.</td>
+</tr>
+<tr class="odd">
+<td>Type</td>
+<td>Around 85% of posts are photos.</td>
+</tr>
+<tr class="even">
+<td>Post.Month</td>
+<td>Month the post was published (January, February, March, …,December).Needs to investigated further.</td>
+</tr>
+<tr class="odd">
+<td>Post.Hour</td>
+<td>Hour the post was published (0, 1, 2, 3, 4, …, 23)..The frequency in the graph is shown only for 10 categories. Needs to investigated further.</td>
+</tr>
+<tr class="even">
+<td>Post.Weekday</td>
+<td>The data is for the 7 days of the week.Weekday the post was published (Sunday, Monday,..Saturday).Most posts are published on Fridays and Sat, followed by Wed.</td>
+</tr>
+<tr class="odd">
+<td>Paid</td>
+<td>Most of the messages are paid - 72%</td>
+</tr>
+<tr class="even">
+<td>Lifetime.Post.Consumers</td>
+<td>On an average-the lifetime value is 804.2.</td>
+</tr>
+<tr class="odd">
+<td>comment</td>
+<td>On an average a post received 8 comments.Median shows 3. The data may have outliers.Basically not many comments for a post. TheIQR also indicates that most posts receive low number of comments.</td>
+</tr>
+<tr class="even">
+<td>like</td>
+<td>On an average a post received 179 likes.Again the median and mean differ greatly. To be investigated further.</td>
+</tr>
+<tr class="odd">
+<td>share</td>
+<td>On an average a post received 27 shares.Again the median and mean differ greatly. To be investigated further.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="footer">
+<p>Copyright &copy; 2020,  Angeline Fernando,  All rights reserved.</p>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Univariate</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Angeline G Fernando</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://scholar.google.com/citations?user=BprGSCkAAAAJ&amp;hl=en">
+    <span class="fa fa-google"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/angelinegautami/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Univariate</h1>
+
+</div>
+
+
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<div id="simple-frequency-and-plots-for-categorical-variables" class="section level3">
+<h3>Simple frequency and plots for categorical variables</h3>
+<pre><code>##     Category    Page.total.likes     Type             Post.Month       Post.Hour      Post.Weekday 
+##  Min.   :1.00   Min.   : 81370   Length:500         Min.   : 1.000   Min.   : 1.00   Min.   :1.00  
+##  1st Qu.:1.00   1st Qu.:112676   Class :character   1st Qu.: 4.000   1st Qu.: 3.00   1st Qu.:2.00  
+##  Median :2.00   Median :129600   Mode  :character   Median : 7.000   Median : 9.00   Median :4.00  
+##  Mean   :1.88   Mean   :123194                      Mean   : 7.038   Mean   : 7.84   Mean   :4.15  
+##  3rd Qu.:3.00   3rd Qu.:136393                      3rd Qu.:10.000   3rd Qu.:11.00   3rd Qu.:6.00  
+##  Max.   :3.00   Max.   :139441                      Max.   :12.000   Max.   :23.00   Max.   :7.00  
+##                                                                                                    
+##       Paid        Lifetime.Post.Consumers    comment             like            share       
+##  Min.   :0.0000   Min.   :    9.0         Min.   :  0.000   Min.   :   0.0   Min.   :  0.00  
+##  1st Qu.:0.0000   1st Qu.:  332.5         1st Qu.:  1.000   1st Qu.:  56.5   1st Qu.: 10.00  
+##  Median :0.0000   Median :  551.5         Median :  3.000   Median : 101.0   Median : 19.00  
+##  Mean   :0.2786   Mean   :  798.8         Mean   :  7.482   Mean   : 177.9   Mean   : 27.27  
+##  3rd Qu.:1.0000   3rd Qu.:  955.5         3rd Qu.:  7.000   3rd Qu.: 187.5   3rd Qu.: 32.25  
+##  Max.   :1.0000   Max.   :11328.0         Max.   :372.000   Max.   :5172.0   Max.   :790.00  
+##  NA&#39;s   :1                                                  NA&#39;s   :1        NA&#39;s   :4</code></pre>
+<pre class="r"><code>library(summarytools)
+freq(mydata$Category, plain.ascii = FALSE, style = &quot;rmarkdown&quot;)</code></pre>
+</div>
+<div id="frequencies" class="section level3">
+<h3>Frequencies</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="right"> </th>
+<th align="right">Freq</th>
+<th align="right">% Valid</th>
+<th align="right">% Valid Cum.</th>
+<th align="right">% Total</th>
+<th align="right">% Total Cum.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong>1</strong></td>
+<td align="right">211</td>
+<td align="right">42.63</td>
+<td align="right">42.63</td>
+<td align="right">42.63</td>
+<td align="right">42.63</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>2</strong></td>
+<td align="right">129</td>
+<td align="right">26.06</td>
+<td align="right">68.69</td>
+<td align="right">26.06</td>
+<td align="right">68.69</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>3</strong></td>
+<td align="right">155</td>
+<td align="right">31.31</td>
+<td align="right">100.00</td>
+<td align="right">31.31</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>&lt;NA&gt;</strong></td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Total</strong></td>
+<td align="right">495</td>
+<td align="right">100.00</td>
+<td align="right">100.00</td>
+<td align="right">100.00</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>library(ggplot2)
+
+p1&lt;-ggplot(mydata,mapping = aes(x = Category, fill = Category))+geom_bar()
+p2&lt;-ggplot(mydata,mapping = aes(x = Type, fill = Type))+geom_bar()
+
+
+p3&lt;-ggplot(mydata, aes(Post.Month))+
+  geom_bar(fill = &quot;blue&quot;) 
+p4&lt;-ggplot(mydata, aes(Post.Hour))+
+  geom_bar(fill = &quot;red&quot;) 
+
+grid.arrange(p1, p2,p3,p4 ,nrow = 2,ncol=2)</code></pre>
+<p><img src="univariate-r_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>
+<div id="some-observations" class="section level2">
+<h2>Some observations</h2>
+<ul>
+<li><p>Most of the posts are Category 1 () posts</p></li>
+<li><p>Most posts are video posts followed by status posts. Not many video posts</p></li>
+<li><p>October has the most posts</p></li>
+<li><p>Early morning (post 12 AM) and 10 AM to 2 PM seem to be the preferred post timings</p></li>
+</ul>
+</div>
+<div id="questions-arising-from-observing-the-graph-above" class="section level2">
+<h2>Questions arising from observing the graph above</h2>
+<ol style="list-style-type: decimal">
+<li>Do the brand engagement related variables (share,like,comment) differ based on post category, type , month,time,day of the post ?</li>
+</ol>
+<hr />
+<div id="continuous-variables" class="section level3">
+<h3>Continuous variables</h3>
+<pre class="r"><code>library(summarytools)
+
+# descr is used to summarise the numerical variables in the data frame
+descr(mydata,transpose = TRUE,stats = c(&quot;mean&quot;,&quot;max&quot;,&quot;sd&quot;,&quot;skewness&quot;,&quot;kurtosis&quot;))</code></pre>
+<pre><code>## Warning: `funs()` is deprecated as of dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<pre><code>## Non-numerical variable(s) ignored: Category, Type, Post.Month, Post.Hour, Post.Weekday, Paid</code></pre>
+<p>Descriptive Statistics</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Mean</th>
+<th align="right">Max</th>
+<th align="right">Std.Dev</th>
+<th align="right">Skewness</th>
+<th align="right">Kurtosis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>comment</td>
+<td align="right">7.56</td>
+<td align="right">372.00</td>
+<td align="right">21.27</td>
+<td align="right">11.65</td>
+<td align="right">179.31</td>
+</tr>
+<tr class="even">
+<td>Lifetime.Post.Consumers</td>
+<td align="right">804.16</td>
+<td align="right">11328.00</td>
+<td align="right">885.18</td>
+<td align="right">4.99</td>
+<td align="right">44.08</td>
+</tr>
+<tr class="odd">
+<td>like</td>
+<td align="right">179.15</td>
+<td align="right">5172.00</td>
+<td align="right">324.41</td>
+<td align="right">8.88</td>
+<td align="right">116.83</td>
+</tr>
+<tr class="even">
+<td>Page.total.likes</td>
+<td align="right">123173.27</td>
+<td align="right">139441.00</td>
+<td align="right">16203.82</td>
+<td align="right">-0.96</td>
+<td align="right">-0.31</td>
+</tr>
+<tr class="odd">
+<td>share</td>
+<td align="right">27.26</td>
+<td align="right">790.00</td>
+<td align="right">42.66</td>
+<td align="right">12.08</td>
+<td align="right">205.17</td>
+</tr>
+</tbody>
+</table>
+<div id="histograms" class="section level4">
+<h4>Histograms</h4>
+<pre class="r"><code>p1 &lt;- ggplot(data = mydata, mapping = aes(x = comment))+ geom_histogram(binsize = 0.5)</code></pre>
+<pre><code>## Warning: Ignoring unknown parameters: binsize</code></pre>
+<pre class="r"><code>p2 &lt;- ggplot(data = mydata, mapping = aes(x = share))+ geom_histogram(bins = 10)
+
+p3 &lt;- ggplot(data = mydata, mapping = aes(x = like))+ geom_histogram(bins = 10)
+
+
+p4 &lt;- ggplot(data = mydata, mapping = aes(x = Lifetime.Post.Consumers))+ geom_histogram(bins = 10)
+
+grid.arrange(p1, p2,p3,p4 ,nrow = 2,ncol=2)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="univariate-r_files/figure-html/unnamed-chunk-5-1.png" width="672" /> #### Box Plots</p>
+<pre class="r"><code>b1&lt;-ggplot(mydata, aes(x=&quot;share&quot;,y=share)) + 
+  geom_boxplot()
+b2&lt;-ggplot(mydata, aes(x=&quot;like&quot;,y=like)) + 
+  geom_boxplot()
+b3&lt;-ggplot(mydata, aes(x=&quot;comment&quot;,y=comment)) + 
+  geom_boxplot()
+b4&lt;-ggplot(mydata, aes(x=&quot;Lifetime.Post.Consumers&quot;,y=Lifetime.Post.Consumers)) + 
+ geom_boxplot()+coord_cartesian(ylim=c(0,12000))+scale_y_continuous(breaks=seq(0,12000,1000))
+grid.arrange(b1, b2,b3,b4 ,nrow = 2,ncol=2)</code></pre>
+<p><img src="univariate-r_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div id="summary" class="section level5">
+<h5>Summary</h5>
+<p>The histograms show that all the continuous variables are right-skewed.Most of the values are less than the mean val.</p>
+<p>1.Comments:Most of the posts have received close to 0 comments or have less than hundred. There are a couple of posts which have comments more than 100. 2.All the other brand engagement metrics(share,like and Lifetime.Post.Consumers) show a similar pattern.A box plot would helps us identify the outliers. Let’s check this out next.</p>
+<pre class="r"><code>a22 &lt;- ggplot(mydata, aes(x = Category, y = comment)) +
+  geom_boxplot()
+a23 &lt;- ggplot(mydata, aes(x = Type, y = comment)) +
+  geom_boxplot()
+a24 &lt;- ggplot(mydata, aes(x = Paid, y = comment)) +
+  geom_boxplot()
+a25 &lt;- ggplot(mydata, aes(x = Post.Hour, y = comment)) +
+  geom_boxplot()
+grid.arrange(a22, a23,a24,a25,nrow = 2,ncol=2)</code></pre>
+<p><img src="univariate-r_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="boxplots" class="section level5">
+<h5>Boxplots</h5>
+<p>Plot1: Category 2(offer related posts) posts have generated the outlier. Nevertheless, we can not that contest and discounts will generate more comments. This should be verified by other relevant statistical tests.e.g. ANOVA</p>
+<hr />
+<blockquote>
+<p>Probability density Plots</p>
+</blockquote>
+<pre class="r"><code>p1 &lt;- ggplot(data = mydata, mapping = aes(x = comment))+ geom_density()
+
+
+p2 &lt;- ggplot(data = mydata, mapping = aes(x = share))+ geom_density()
+
+p3 &lt;- ggplot(data = mydata, mapping = aes(x = like))+ geom_density()
+
+
+p4 &lt;- ggplot(data = mydata, mapping = aes(x = Lifetime.Post.Consumers))+ geom_density()
+p5 &lt;- ggplot(data = mydata, mapping = aes(x = Lifetime.Post.Consumers))+ geom_density(alpha=0.3)
+
+grid.arrange(p1, p2,p5,p4 ,nrow = 2,ncol=2)</code></pre>
+<p><img src="univariate-r_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="footer">
+<p>Copyright &copy; 2020,  Angeline Fernando,  All rights reserved.</p>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
