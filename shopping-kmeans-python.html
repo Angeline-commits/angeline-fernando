@@ -11,7 +11,7 @@
 
 
 
-<title>Univariate</title>
+<title>Shopping-Kmeans-Python</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -309,178 +309,117 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Univariate</h1>
+<h1 class="title toc-ignore">Shopping-Kmeans-Python</h1>
 
 </div>
 
 
-<pre class="python"><code>
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-mydata=pd.read_csv(&#39;./data/dataset_Facebook.csv&#39;)
-type(mydata)</code></pre>
-<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</code></pre>
-<pre class="python"><code>mydata.shape</code></pre>
-<pre><code>## (500, 11)</code></pre>
-<pre class="python"><code>mydata.head(5)</code></pre>
-<pre><code>##    Category  Page total likes    Type  Post Month  Post Hour  Post Weekday  \
-## 0         2            139441   Photo          12          3             4   
-## 1         2            139441  Status          12         10             3   
-## 2         3            139441   Photo          12          3             3   
-## 3         2            139441   Photo          12         10             2   
-## 4         2            139441   Photo          12          3             2   
-## 
-##    Paid  Lifetime Post Consumers  comment    like  share  
-## 0   0.0                      109        4    79.0   17.0  
-## 1   0.0                     1361        5   130.0   29.0  
-## 2   0.0                      113        0    66.0   14.0  
-## 3   1.0                      790       58  1572.0  147.0  
-## 4   0.0                      410       19   325.0   49.0</code></pre>
-<pre class="python"><code>pd.set_option(&#39;display.max_columns&#39;,11)
-mydata.head(5)</code></pre>
-<pre><code>##    Category  Page total likes    Type  Post Month  Post Hour  Post Weekday  \
-## 0         2            139441   Photo          12          3             4   
-## 1         2            139441  Status          12         10             3   
-## 2         3            139441   Photo          12          3             3   
-## 3         2            139441   Photo          12         10             2   
-## 4         2            139441   Photo          12          3             2   
-## 
-##    Paid  Lifetime Post Consumers  comment    like  share  
-## 0   0.0                      109        4    79.0   17.0  
-## 1   0.0                     1361        5   130.0   29.0  
-## 2   0.0                      113        0    66.0   14.0  
-## 3   1.0                      790       58  1572.0  147.0  
-## 4   0.0                      410       19   325.0   49.0</code></pre>
-<pre class="python"><code>mydata.dtypes </code></pre>
-<pre><code>## Category                     int64
-## Page total likes             int64
-## Type                        object
-## Post Month                   int64
-## Post Hour                    int64
-## Post Weekday                 int64
-## Paid                       float64
-## Lifetime Post Consumers      int64
-## comment                      int64
-## like                       float64
-## share                      float64
-## dtype: object</code></pre>
-<pre class="python"><code>mydata[&#39;Category&#39;] = mydata[&#39;Category&#39;].astype(str)
-mydata[&#39;Type&#39;] = mydata[&#39;Type&#39;].astype(str)
-
-#Month displayed in order in plots
-from pandas.api.types import CategoricalDtype
-month_list = pd.Series(range(1,13))
-month_cat = pd.Categorical(mydata[&#39;Post Month&#39;], categories=month_list)
-cat_type = CategoricalDtype(categories=month_list, ordered=True)
-mydata[&#39;Post Month&#39;] = mydata[&#39;Post Month&#39;].astype(cat_type)
-
-from pandas.api.types import CategoricalDtype
-hr_list = pd.Series(range(1,25))
-month_cat = pd.Categorical(mydata[&#39;Post Hour&#39;], categories=hr_list)
-cat_type = CategoricalDtype(categories=hr_list, ordered=True)
-mydata[&#39;Post Hour&#39;] = mydata[&#39;Post Hour&#39;].astype(cat_type)
-
-mydata[&#39;Post Weekday&#39;] = mydata[&#39;Post Weekday&#39;].astype(str)
-mydata[&#39;Paid&#39;] = mydata[&#39;Paid&#39;].astype(str)
-mydata.dtypes 
-</code></pre>
-<pre><code>## Category                     object
-## Page total likes              int64
-## Type                         object
-## Post Month                 category
-## Post Hour                  category
-## Post Weekday                 object
-## Paid                         object
-## Lifetime Post Consumers       int64
-## comment                       int64
-## like                        float64
-## share                       float64
-## dtype: object</code></pre>
-<pre class="python"><code>mydata.isna().any()
-
-#Paid , like, share have missing values</code></pre>
-<pre><code>## Category                   False
-## Page total likes           False
-## Type                       False
-## Post Month                 False
-## Post Hour                  False
-## Post Weekday               False
-## Paid                       False
-## Lifetime Post Consumers    False
-## comment                    False
-## like                        True
-## share                       True
-## dtype: bool</code></pre>
-<pre class="python"><code>null_rows = mydata[mydata.isnull().any(axis=1)]
-null_rows</code></pre>
-<pre><code>##     Category  Page total likes   Type Post Month Post Hour Post Weekday Paid  \
-## 111        1            136736  Photo         10         8            6  0.0   
-## 120        1            136393  Photo         10         9            7  0.0   
-## 124        1            136393  Photo         10         6            7  0.0   
-## 164        1            135428  Photo          9        10            5  0.0   
-## 
-##      Lifetime Post Consumers  comment  like  share  
-## 111                       37        0   NaN    NaN  
-## 120                      271        0   2.0    NaN  
-## 124                      246        0   7.0    NaN  
-## 164                      251        0  18.0    NaN</code></pre>
-<pre class="python"><code>mydata=mydata.dropna()
-mydata.shape
-
-#5 rows deleted</code></pre>
-<pre><code>## (496, 11)</code></pre>
-<pre class="python"><code>mydata.describe()
-</code></pre>
-<pre><code>##        Page total likes  Lifetime Post Consumers     comment         like  \
-## count        496.000000               496.000000  496.000000   496.000000   
-## mean      123088.987903               803.590726    7.542339   178.967742   
-## std        16295.904371               884.379330   21.255593   324.108473   
-## min        81370.000000                 9.000000    0.000000     0.000000   
-## 25%       111620.000000               335.000000    1.000000    57.000000   
-## 50%       129600.000000               555.000000    3.000000   101.000000   
-## 75%       136393.000000               966.000000    7.000000   188.000000   
-## max       139441.000000             11328.000000  372.000000  5172.000000   
-## 
-##             share  
-## count  496.000000  
-## mean    27.266129  
-## std     42.613292  
-## min      0.000000  
-## 25%     10.000000  
-## 50%     19.000000  
-## 75%     32.250000  
-## max    790.000000</code></pre>
-<pre class="python"><code>import seaborn as sns
-import matplotlib.pyplot as plt
-
-category_count = mydata[&#39;Category&#39;].value_counts()
-type_count = mydata[&#39;Type&#39;].value_counts()
-mnth_count = mydata[&#39;Post Month&#39;].value_counts()
-hr_count = mydata[&#39;Post Hour&#39;].value_counts()
-
-figure, axes = plt.subplots(nrows=2, ncols=2,figsize=(15,20))
-axes[0, 0].set_title(&#39;Category Frequency&#39;)
-axes[0, 0].set(xlabel=&#39;Category&#39;, ylabel=&#39;Number of Occurrences&#39;)</code></pre>
-<pre><code>## [Text(0, 0.5, &#39;Number of Occurrences&#39;), Text(0.5, 0, &#39;Category&#39;)]</code></pre>
-<pre class="python"><code>axes[0, 1].set_title(&#39;Type Frequency&#39;)
-axes[0, 1].set(xlabel=&#39;Type&#39;, ylabel=&#39;Number of Occurrences&#39;)</code></pre>
-<pre><code>## [Text(0, 0.5, &#39;Number of Occurrences&#39;), Text(0.5, 0, &#39;Type&#39;)]</code></pre>
-<pre class="python"><code>axes[1, 0].set_title(&#39;Month Frequency&#39;)
-axes[1, 0].set(xlabel=&#39;Month&#39;, ylabel=&#39;Number of Occurrences&#39;)</code></pre>
-<pre><code>## [Text(0, 0.5, &#39;Number of Occurrences&#39;), Text(0.5, 0, &#39;Month&#39;)]</code></pre>
-<pre class="python"><code>axes[1, 1].set_title(&#39;Hours Frequency&#39;)
-axes[1, 1].set(xlabel=&#39;Hours&#39;, ylabel=&#39;Number of Occurrences&#39;)
-</code></pre>
-<pre><code>## [Text(0, 0.5, &#39;Number of Occurrences&#39;), Text(0.5, 0, &#39;Hours&#39;)]</code></pre>
-<pre class="python"><code>sns.barplot(category_count.index, category_count.values,
-            alpha=0.9,ax = axes[0][0])
-sns.barplot(type_count.index, type_count.values, alpha=0.9,ax = axes[0][1])
-sns.barplot(mnth_count.index, mnth_count.values, alpha=0.9,ax = axes[1][0])
-sns.barplot(hr_count.index, hr_count.values, alpha=0.9,ax = axes[1][1])
-plt.show()
-</code></pre>
-<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-1-1.png" width="1440" /></p>
+<pre><code>##    CaseNo  V1  V2  V3  V4  V5  V6
+## 0       1   6   4   7   3   2   3
+## 1       2   2   3   1   4   5   4
+## 2       3   7   2   6   4   1   3
+## 3       4   4   6   4   5   3   6
+## 4       5   1   3   2   2   6   4</code></pre>
+<pre><code>##     CaseNo  V1  V2  V3  V4  V5  V6
+## 0        1   6   4   7   3   2   3
+## 1        2   2   3   1   4   5   4
+## 2        3   7   2   6   4   1   3
+## 3        4   4   6   4   5   3   6
+## 4        5   1   3   2   2   6   4
+## 5        6   6   4   6   3   3   4
+## 6        7   5   3   6   3   3   4
+## 7        8   7   3   7   4   1   4
+## 8        9   2   4   3   3   6   3
+## 9       10   3   5   3   6   4   6
+## 10      11   1   3   2   3   5   3
+## 11      12   5   4   5   4   2   4
+## 12      13   2   2   1   5   4   4
+## 13      14   4   6   4   6   4   7
+## 14      15   6   5   4   2   1   4
+## 15      16   3   5   4   6   4   7
+## 16      17   4   4   7   2   2   5
+## 17      18   3   7   2   6   4   3
+## 18      19   4   6   3   7   2   7
+## 19      20   2   3   2   4   7   2</code></pre>
+<pre><code>##     V1  V2  V3  V4  V5  V6
+## 0    6   4   7   3   2   3
+## 1    2   3   1   4   5   4
+## 2    7   2   6   4   1   3
+## 3    4   6   4   5   3   6
+## 4    1   3   2   2   6   4
+## 5    6   4   6   3   3   4
+## 6    5   3   6   3   3   4
+## 7    7   3   7   4   1   4
+## 8    2   4   3   3   6   3
+## 9    3   5   3   6   4   6
+## 10   1   3   2   3   5   3
+## 11   5   4   5   4   2   4
+## 12   2   2   1   5   4   4
+## 13   4   6   4   6   4   7
+## 14   6   5   4   2   1   4
+## 15   3   5   4   6   4   7
+## 16   4   4   7   2   2   5
+## 17   3   7   2   6   4   3
+## 18   4   6   3   7   2   7
+## 19   2   3   2   4   7   2</code></pre>
+<pre><code>## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=1, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=2, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=3, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=4, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=5, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=6, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=7, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=8, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)
+## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=9, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)</code></pre>
+<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-1-1.png" width="576" /></p>
+<pre><code>## KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+##        n_clusters=3, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+##        random_state=None, tol=0.0001, verbose=0)</code></pre>
+<pre><code>## [1 2 1 0 2 1 1 1 2 0 2 1 2 0 1 0 1 0 0 2]</code></pre>
+<pre><code>## [[3.5        5.83333333 3.33333333 6.         3.5        6.        ]
+##  [5.75       3.625      6.         3.125      1.875      3.875     ]
+##  [1.66666667 3.         1.83333333 3.5        5.5        3.33333333]]</code></pre>
+<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
+## 3    4   6   4   5   3   6          0
+## 9    3   5   3   6   4   6          0
+## 13   4   6   4   6   4   7          0
+## 15   3   5   4   6   4   7          0
+## 17   3   7   2   6   4   3          0
+## 18   4   6   3   7   2   7          0</code></pre>
+<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
+## 0    6   4   7   3   2   3          1
+## 2    7   2   6   4   1   3          1
+## 5    6   4   6   3   3   4          1
+## 6    5   3   6   3   3   4          1
+## 7    7   3   7   4   1   4          1
+## 11   5   4   5   4   2   4          1
+## 14   6   5   4   2   1   4          1
+## 16   4   4   7   2   2   5          1</code></pre>
+<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
+## 1    2   3   1   4   5   4          2
+## 4    1   3   2   2   6   4          2
+## 8    2   4   3   3   6   3          2
+## 10   1   3   2   3   5   3          2
+## 12   2   2   1   5   4   4          2
+## 19   2   3   2   4   7   2          2</code></pre>
 
 <div id="footer">
 <p>Copyright &copy; 2020,  Angeline Fernando,  All rights reserved.</p>
