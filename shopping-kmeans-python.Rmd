@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 use_virtualenv("r-reticulate")
 
 ```
-```{python echo=FALSE}
+```{python echo=TRUE}
 
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
