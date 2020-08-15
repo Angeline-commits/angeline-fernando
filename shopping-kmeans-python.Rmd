@@ -1,0 +1,93 @@
+---
+title: "Univariate"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+library(reticulate)
+knitr::opts_chunk$set(echo = TRUE)
+use_virtualenv("r-reticulate")
+
+```
+```{python echo=TRUE}
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+mydata=pd.read_csv('./data/dataset_Facebook.csv')
+type(mydata)
+mydata.shape
+
+mydata.head(5)
+pd.set_option('display.max_columns',11)
+mydata.head(5)
+
+mydata.dtypes 
+
+mydata['Category'] = mydata['Category'].astype(str)
+mydata['Type'] = mydata['Type'].astype(str)
+
+#Month displayed in order in plots
+from pandas.api.types import CategoricalDtype
+month_list = pd.Series(range(1,13))
+month_cat = pd.Categorical(mydata['Post Month'], categories=month_list)
+cat_type = CategoricalDtype(categories=month_list, ordered=True)
+mydata['Post Month'] = mydata['Post Month'].astype(cat_type)
+
+from pandas.api.types import CategoricalDtype
+hr_list = pd.Series(range(1,25))
+month_cat = pd.Categorical(mydata['Post Hour'], categories=hr_list)
+cat_type = CategoricalDtype(categories=hr_list, ordered=True)
+mydata['Post Hour'] = mydata['Post Hour'].astype(cat_type)
+
+mydata['Post Weekday'] = mydata['Post Weekday'].astype(str)
+mydata['Paid'] = mydata['Paid'].astype(str)
+mydata.dtypes 
+
+
+
+mydata.isna().any()
+
+#Paid , like, share have missing values
+
+null_rows = mydata[mydata.isnull().any(axis=1)]
+null_rows
+mydata=mydata.dropna()
+mydata.shape
+
+#5 rows deleted
+
+mydata.describe()
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+category_count = mydata['Category'].value_counts()
+type_count = mydata['Type'].value_counts()
+mnth_count = mydata['Post Month'].value_counts()
+hr_count = mydata['Post Hour'].value_counts()
+
+figure, axes = plt.subplots(nrows=2, ncols=2,figsize=(15,20))
+axes[0, 0].set_title('Category Frequency')
+axes[0, 0].set(xlabel='Category', ylabel='Number of Occurrences')
+axes[0, 1].set_title('Type Frequency')
+axes[0, 1].set(xlabel='Type', ylabel='Number of Occurrences')
+axes[1, 0].set_title('Month Frequency')
+axes[1, 0].set(xlabel='Month', ylabel='Number of Occurrences')
+axes[1, 1].set_title('Hours Frequency')
+axes[1, 1].set(xlabel='Hours', ylabel='Number of Occurrences')
+
+
+sns.barplot(category_count.index, category_count.values,
+            alpha=0.9,ax = axes[0][0])
+sns.barplot(type_count.index, type_count.values, alpha=0.9,ax = axes[0][1])
+sns.barplot(mnth_count.index, mnth_count.values, alpha=0.9,ax = axes[1][0])
+sns.barplot(hr_count.index, hr_count.values, alpha=0.9,ax = axes[1][1])
+plt.show()
+
+
+```
+
+
+
