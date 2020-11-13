@@ -7,5 +7,11 @@
 </li>
 </ul>
 
+<ul>
+<li>
+<p><strong>Datsets</strong> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/en/tanagra.html" target="_blank" rel="noopener">Tanagra</a> , <a href="http://eric.univ-lyon2.fr/~ricco/sipina.html" target="_blank" rel="noopener">Sipina</a> , <a href="https://regressit.com/regressitlogistic.html" target="_blank" rel="noopener">RegressItLogistic</a>  </p>
+</li>
+</ul>
+
  
 
