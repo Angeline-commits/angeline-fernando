@@ -1,4 +1,3 @@
-<h1>Teaching</h1>
 <h2>Business Analytics-PGPM-2020</h2>
 <p>&nbsp;</p>
 
