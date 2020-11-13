@@ -9,7 +9,7 @@
 
 <ul>
 <li>
-<p><strong>Dowloand Datsets</strong> <a href="https://bit.ly/32FNKfg" target="_blank" rel="noopener">BA Datasets</a> </p>
+<p><strong>Dowloand Datsets</strong> <a href="https://bit.ly/3f3jDDC" download>BA Datasets</a> </p>
 </li>
 </ul>
 
