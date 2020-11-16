@@ -9,7 +9,7 @@
 
 <ul>
 <li>
-<p><strong>Setting Up the Excel-Add Ons</strong> <a href="Excel Add-ins.mht">Setting up the Excel Add Ons</a> </p>
+<p><strong>Setting Up the Excel-Add Ons</strong> <a href="Excel Add-ins.html">Setting up the Excel Add Ons</a> </p>
 </li>
 </ul>
 
