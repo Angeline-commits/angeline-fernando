@@ -10,6 +10,8 @@ navbar:
       href: teaching.html
     - text: "BA-PGPM2020"
       href: BA-PGPM-2020.html
+    - text: "Excel Add-ins"
+      href: Excel Add-ins.html
   right:
     - icon: fa-envelope fa-lg
       href: contact.html
