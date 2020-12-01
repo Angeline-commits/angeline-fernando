@@ -20,5 +20,11 @@
 </li>
 </ul>
 
+<ul>
+<li>
+<p><strong>Class Notes</strong> <a href="ClassNotes.html">Class Notes</a> </p>
+</li>
+</ul>
+
  
 
