@@ -8,8 +8,6 @@ navbar:
       href: research.html
     - text: "Teaching"
       href: teaching.html
-    - text: "BA-PGPM2020"
-      href: BA-PGPM-2020.html
 
   right:
     - icon: fa-envelope fa-lg
