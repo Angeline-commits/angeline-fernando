@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Angeline" />
+
+
+<title>Logit-Admit-Python</title>
+
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Angeline G Fernando</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://scholar.google.com/citations?user=BprGSCkAAAAJ&amp;hl=en">
+    <span class="fa fa-google"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/angelinegautami/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Logit-Admit-Python</h1>
+<h4 class="author">Angeline</h4>
+<h4 class="date">28/12/2020</h4>
+
+</div>
+
+
+<pre class="python"><code>import pandas as pd
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix,accuracy_score,classification_report
+mydata=pd.read_csv(&#39;./data/admit.csv&#39;)
+type(mydata)</code></pre>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</code></pre>
+<pre class="python"><code>print(mydata.shape)</code></pre>
+<pre><code>## (400, 5)</code></pre>
+<pre class="python"><code>print(mydata.head(5))</code></pre>
+<pre><code>##    admit  gre   gpa  rank  gender
+## 0      1  660  3.67     3    Male
+## 1      1  800  4.00     1  Female
+## 2      1  640  3.19     4    Male
+## 3      1  760  3.00     2    Male
+## 4      1  560  2.98     1  Female</code></pre>
+<pre class="python"><code>print(mydata.dtypes)</code></pre>
+<pre><code>## admit       int64
+## gre         int64
+## gpa       float64
+## rank        int64
+## gender     object
+## dtype: object</code></pre>
+<pre class="python"><code>mydata[&#39;admit&#39;] = mydata[&#39;admit&#39;].astype(&#39;category&#39;)
+mydata[&#39;gender&#39;] = mydata[&#39;gender&#39;].astype(&#39;category&#39;)
+mydata[&#39;rank&#39;] = mydata[&#39;rank&#39;].astype(&#39;category&#39;)
+
+#Dummy coding
+df_new =pd.get_dummies(mydata, columns=[&#39;gender&#39;, &#39;rank&#39;],prefix=[&#39;gender_&#39;, &#39;rank_&#39;],drop_first=True)
+
+print(df_new)</code></pre>
+<pre><code>##     admit  gre   gpa  gender__Male  rank__2  rank__3  rank__4
+## 0       1  660  3.67             1        0        1        0
+## 1       1  800  4.00             0        0        0        0
+## 2       1  640  3.19             1        0        0        1
+## 3       1  760  3.00             1        1        0        0
+## 4       1  560  2.98             0        0        0        0
+## ..    ...  ...   ...           ...      ...      ...      ...
+## 395     0  620  4.00             0        1        0        0
+## 396     0  560  3.04             1        0        1        0
+## 397     0  460  2.63             0        1        0        0
+## 398     0  700  3.65             1        1        0        0
+## 399     0  600  3.89             1        0        1        0
+## 
+## [400 rows x 7 columns]</code></pre>
+<pre class="python"><code>Y=df_new.admit
+X=df_new[[&#39;gre&#39;,&#39;gpa&#39;,&#39;gender__Male&#39;,&#39;rank__2&#39;,&#39;rank__3&#39;,&#39;rank__4&#39;]]
+X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=0.3,random_state=1)
+
+log_model = LogisticRegression(C=1e6,solver=&#39;newton-cg&#39;)
+m = log_model.fit(X_train,y_train)
+y_pred=m.predict(X_test)
+cm=confusion_matrix(y_test,y_pred)
+print(cm)</code></pre>
+<pre><code>## [[71 13]
+##  [19 17]]</code></pre>
+<pre class="python"><code>print(accuracy_score(y_test, y_pred))</code></pre>
+<pre><code>## 0.7333333333333333</code></pre>
+<pre class="python"><code>print(classification_report(y_test, y_pred))
+#Change cut-offs
+
+#Predict the class probability</code></pre>
+<pre><code>##               precision    recall  f1-score   support
+## 
+##            0       0.79      0.85      0.82        84
+##            1       0.57      0.47      0.52        36
+## 
+##     accuracy                           0.73       120
+##    macro avg       0.68      0.66      0.67       120
+## weighted avg       0.72      0.73      0.73       120</code></pre>
+<pre class="python"><code>y_pred=m.predict_proba(X_test)
+y_pred
+#Second index checks the probaility of class 1</code></pre>
+<pre><code>## array([[0.38371047, 0.61628953],
+##        [0.40090213, 0.59909787],
+##        [0.17776896, 0.82223104],
+##        [0.8040259 , 0.1959741 ],
+##        [0.96263102, 0.03736898],
+##        [0.39994804, 0.60005196],
+##        [0.93284515, 0.06715485],
+##        [0.62977539, 0.37022461],
+##        [0.31894313, 0.68105687],
+##        [0.78347091, 0.21652909],
+##        [0.35903451, 0.64096549],
+##        [0.4170763 , 0.5829237 ],
+##        [0.50152479, 0.49847521],
+##        [0.71350097, 0.28649903],
+##        [0.71196906, 0.28803094],
+##        [0.70727297, 0.29272703],
+##        [0.84963124, 0.15036876],
+##        [0.72758607, 0.27241393],
+##        [0.55091936, 0.44908064],
+##        [0.49295862, 0.50704138],
+##        [0.48601773, 0.51398227],
+##        [0.75773244, 0.24226756],
+##        [0.27800777, 0.72199223],
+##        [0.60245894, 0.39754106],
+##        [0.85650485, 0.14349515],
+##        [0.61991569, 0.38008431],
+##        [0.9189485 , 0.0810515 ],
+##        [0.55787444, 0.44212556],
+##        [0.69955361, 0.30044639],
+##        [0.75634862, 0.24365138],
+##        [0.44377748, 0.55622252],
+##        [0.73802044, 0.26197956],
+##        [0.55982366, 0.44017634],
+##        [0.71633982, 0.28366018],
+##        [0.18632248, 0.81367752],
+##        [0.82518442, 0.17481558],
+##        [0.26927914, 0.73072086],
+##        [0.70973515, 0.29026485],
+##        [0.89335701, 0.10664299],
+##        [0.93609083, 0.06390917],
+##        [0.88362465, 0.11637535],
+##        [0.94123324, 0.05876676],
+##        [0.7459826 , 0.2540174 ],
+##        [0.77332455, 0.22667545],
+##        [0.66769944, 0.33230056],
+##        [0.34933725, 0.65066275],
+##        [0.73208368, 0.26791632],
+##        [0.69026249, 0.30973751],
+##        [0.84452459, 0.15547541],
+##        [0.71046587, 0.28953413],
+##        [0.76350614, 0.23649386],
+##        [0.34547363, 0.65452637],
+##        [0.78546102, 0.21453898],
+##        [0.53686712, 0.46313288],
+##        [0.82218838, 0.17781162],
+##        [0.44524936, 0.55475064],
+##        [0.71899984, 0.28100016],
+##        [0.38062738, 0.61937262],
+##        [0.87750593, 0.12249407],
+##        [0.79891749, 0.20108251],
+##        [0.76524436, 0.23475564],
+##        [0.43226863, 0.56773137],
+##        [0.69381231, 0.30618769],
+##        [0.80070114, 0.19929886],
+##        [0.94215725, 0.05784275],
+##        [0.77853638, 0.22146362],
+##        [0.26361822, 0.73638178],
+##        [0.53705622, 0.46294378],
+##        [0.84721808, 0.15278192],
+##        [0.80123624, 0.19876376],
+##        [0.73756148, 0.26243852],
+##        [0.70625402, 0.29374598],
+##        [0.93913653, 0.06086347],
+##        [0.86663813, 0.13336187],
+##        [0.23147943, 0.76852057],
+##        [0.53451192, 0.46548808],
+##        [0.33923109, 0.66076891],
+##        [0.58068501, 0.41931499],
+##        [0.51910744, 0.48089256],
+##        [0.4931591 , 0.5068409 ],
+##        [0.67534943, 0.32465057],
+##        [0.47060759, 0.52939241],
+##        [0.73425146, 0.26574854],
+##        [0.71262759, 0.28737241],
+##        [0.65420602, 0.34579398],
+##        [0.46164444, 0.53835556],
+##        [0.2551817 , 0.7448183 ],
+##        [0.90199662, 0.09800338],
+##        [0.78689434, 0.21310566],
+##        [0.88859016, 0.11140984],
+##        [0.89309101, 0.10690899],
+##        [0.70129133, 0.29870867],
+##        [0.50682384, 0.49317616],
+##        [0.4861341 , 0.5138659 ],
+##        [0.76293997, 0.23706003],
+##        [0.46114033, 0.53885967],
+##        [0.61505269, 0.38494731],
+##        [0.77819359, 0.22180641],
+##        [0.84204187, 0.15795813],
+##        [0.79771282, 0.20228718],
+##        [0.34065279, 0.65934721],
+##        [0.73924365, 0.26075635],
+##        [0.91488856, 0.08511144],
+##        [0.23853968, 0.76146032],
+##        [0.32533201, 0.67466799],
+##        [0.83398023, 0.16601977],
+##        [0.74395464, 0.25604536],
+##        [0.81117212, 0.18882788],
+##        [0.54119481, 0.45880519],
+##        [0.63940148, 0.36059852],
+##        [0.73625836, 0.26374164],
+##        [0.57150753, 0.42849247],
+##        [0.7363766 , 0.2636234 ],
+##        [0.93042205, 0.06957795],
+##        [0.69834636, 0.30165364],
+##        [0.70895563, 0.29104437],
+##        [0.83099447, 0.16900553],
+##        [0.76268314, 0.23731686],
+##        [0.59903776, 0.40096224],
+##        [0.57494723, 0.42505277]])</code></pre>
+<pre class="python"><code>y_prob_class1= y_pred[:,1]
+y_prob_class1</code></pre>
+<pre><code>## array([0.61628953, 0.59909787, 0.82223104, 0.1959741 , 0.03736898,
+##        0.60005196, 0.06715485, 0.37022461, 0.68105687, 0.21652909,
+##        0.64096549, 0.5829237 , 0.49847521, 0.28649903, 0.28803094,
+##        0.29272703, 0.15036876, 0.27241393, 0.44908064, 0.50704138,
+##        0.51398227, 0.24226756, 0.72199223, 0.39754106, 0.14349515,
+##        0.38008431, 0.0810515 , 0.44212556, 0.30044639, 0.24365138,
+##        0.55622252, 0.26197956, 0.44017634, 0.28366018, 0.81367752,
+##        0.17481558, 0.73072086, 0.29026485, 0.10664299, 0.06390917,
+##        0.11637535, 0.05876676, 0.2540174 , 0.22667545, 0.33230056,
+##        0.65066275, 0.26791632, 0.30973751, 0.15547541, 0.28953413,
+##        0.23649386, 0.65452637, 0.21453898, 0.46313288, 0.17781162,
+##        0.55475064, 0.28100016, 0.61937262, 0.12249407, 0.20108251,
+##        0.23475564, 0.56773137, 0.30618769, 0.19929886, 0.05784275,
+##        0.22146362, 0.73638178, 0.46294378, 0.15278192, 0.19876376,
+##        0.26243852, 0.29374598, 0.06086347, 0.13336187, 0.76852057,
+##        0.46548808, 0.66076891, 0.41931499, 0.48089256, 0.5068409 ,
+##        0.32465057, 0.52939241, 0.26574854, 0.28737241, 0.34579398,
+##        0.53835556, 0.7448183 , 0.09800338, 0.21310566, 0.11140984,
+##        0.10690899, 0.29870867, 0.49317616, 0.5138659 , 0.23706003,
+##        0.53885967, 0.38494731, 0.22180641, 0.15795813, 0.20228718,
+##        0.65934721, 0.26075635, 0.08511144, 0.76146032, 0.67466799,
+##        0.16601977, 0.25604536, 0.18882788, 0.45880519, 0.36059852,
+##        0.26374164, 0.42849247, 0.2636234 , 0.06957795, 0.30165364,
+##        0.29104437, 0.16900553, 0.23731686, 0.40096224, 0.42505277])</code></pre>
+<pre class="python"><code>y_test
+
+#For a cut-off of 0.5</code></pre>
+<pre><code>## 398    0
+## 125    1
+## 328    0
+## 339    0
+## 172    0
+##       ..
+## 91     1
+## 322    0
+## 248    0
+## 186    0
+## 395    0
+## Name: admit, Length: 120, dtype: category
+## Categories (2, int64): [0, 1]</code></pre>
+<pre class="python"><code>y_pred=[1 if i &gt; 0.5 else 0 for i in y_prob_class1]
+y_pred
+#convert to categorical -to compare with original test data</code></pre>
+<pre><code>## [1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</code></pre>
+<pre class="python"><code>type(y_pred)</code></pre>
+<pre><code>## &lt;class &#39;list&#39;&gt;</code></pre>
+<pre class="python"><code>y_pred = pd.Series(y_pred)
+#y_pred= pd.Categorical(y_pred)
+type(y_pred)</code></pre>
+<pre><code>## &lt;class &#39;pandas.core.series.Series&#39;&gt;</code></pre>
+<pre class="python"><code>type(y_test)</code></pre>
+<pre><code>## &lt;class &#39;pandas.core.series.Series&#39;&gt;</code></pre>
+<pre class="python"><code>print(confusion_matrix(y_test, y_pred))
+
+#confusion_matrix(y_test y_pred)
+#Varying threshold/cut-offs</code></pre>
+<pre><code>## [[71 13]
+##  [19 17]]</code></pre>
+<pre class="python"><code>cutoffs = [0.21,0.1,0.5,0.6,0.9]
+for j in cutoffs:
+   y_pred=[1 if i &gt; j else 0 for i in y_prob_class1]
+   print(confusion_matrix(y_test, y_pred))
+   print(accuracy_score(y_test, y_pred))</code></pre>
+<pre><code>## [[29 55]
+##  [ 2 34]]
+## 0.525
+## [[10 74]
+##  [ 0 36]]
+## 0.38333333333333336
+## [[71 13]
+##  [19 17]]
+## 0.7333333333333333
+## [[77  7]
+##  [25 11]]
+## 0.7333333333333333
+## [[84  0]
+##  [36  0]]
+## 0.7</code></pre>
+
+<div id="footer">
+<p>Copyright &copy; 2020,  Angeline Fernando,  All rights reserved.</p>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
