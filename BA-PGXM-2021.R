@@ -1,0 +1,34 @@
+<h2>Business Analytics-PGDM-2021</h2>
+  <p>&nbsp;</p>
+  
+  <ul>
+  <li>
+  <p><strong>Excel Add Ins</strong> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/en/tanagra.html" target="_blank" rel="noopener">Tanagra</a> , <a href="http://eric.univ-lyon2.fr/~ricco/sipina.html" target="_blank" rel="noopener">Sipina</a> , <a href="https://regressit.com/regressitlogistic.html" target="_blank" rel="noopener">RegressItLogistic</a>  </p>
+    </li>
+    </ul>
+    
+    <ul>
+    <li>
+    <p><strong>Setting Up the Excel-Add Ins</strong> <a href="Excel Add-ins.htm">Setting up the Excel Add Ins</a> </p>
+      </li>
+      </ul>
+      
+      
+      <ul>
+      <li>
+      <p><strong>Download Datsets </strong> <a href="https://bit.ly/3bTdPwO" download>BA Datasets</a> </p>
+        </li>
+        </ul>
+        
+        <ul>
+        <li>
+        
+        <p><strong>Textbook Datsets </strong> <a href="https://www.wileyindia.com/business-analytics-the-science-of-data-driven-decision-making.html" target="_blank" rel="noopener">Textbook Datasets</a> </p>
+          </li>
+          </ul>
+          
+          
+          
+          
+          
+          

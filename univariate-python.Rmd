@@ -6,7 +6,8 @@ output: html_document
 ```{r setup,include=FALSE}
 library(reticulate)
 knitr::opts_chunk$set(echo = TRUE)
-use_virtualenv("r-reticulate")
+use_python("E:/Users/User/anaconda3/python.exe") 
+
 
 ```
 ```{python echo=TRUE}
