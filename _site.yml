@@ -1,4 +1,3 @@
-
 name: "Angeline G Fernando"
 output_dir: "."
 navbar:
@@ -12,8 +11,6 @@ navbar:
       href: BA-PGDM-2021.html
     - text: "PGPM-Flex-2021"
       href: BA-PGPM-Flex-2021.html
-      
-
   right:
     - icon: fa-envelope fa-lg
       href: contact.html
