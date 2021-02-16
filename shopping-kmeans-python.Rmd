@@ -5,14 +5,17 @@ output: html_document
 
 ```{r setup,include=FALSE}
 library(reticulate)
-knitr::opts_chunk$set(echo = TRUE)
-use_virtualenv("r-reticulate")
+use_python('E:/Users/User/anaconda3/python')
+matplotlib <- import("matplotlib")
+matplotlib$use("Agg", force = TRUE)
 
 ```
 ```{python echo=TRUE}
 
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from yellowbrick.cluster import SilhouetteVisualizer
 import pandas as pd
 shopping_original=pd.read_csv('./data/Shopping_Data.csv')
 # Examine data
@@ -32,6 +35,14 @@ for num_clusters in cluster_range:
 plt.figure(figsize=(6,4))
 plt.plot(cluster_range,cluster_errors,marker="o")
 plt.show()
+
+#Silhouette width for 7 cluster solution
+clusters2=KMeans(7)
+visualizer = SilhouetteVisualizer(clusters2)
+visualizer.fit(shopping_df)
+#show the plot
+visualizer.show()
+
 
 k=3
 model=KMeans(k).fit(shopping_df)
