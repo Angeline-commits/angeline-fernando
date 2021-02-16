@@ -29,7 +29,6 @@ inspectDT(rules)
 
 inspect(sort(rules, by = "lift")[1:5])
 inspect(sort(rules, by = "confidence"))
-great_conf<-subset(rules, confidence > 0.50) 
-great_conf
+
 ```
 
