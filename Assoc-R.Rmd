@@ -1,0 +1,35 @@
+---
+title: "Assoc"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r libload,message=FALSE}
+library(arules)
+library(arulesViz)
+library(dplyr)
+```
+```{r}
+#file is in csv format for basket 
+df<-read.csv("./data/simple-txn-file.csv")
+df
+tr<-read.transactions("./data/simple-txn-file.csv",format="basket",sep=",")
+rules <- apriori (tr,parameter = 
+                    list(supp = 0.01, conf = 0.5,
+                         target = "rules"))
+               
+                  
+                 
+inspect(rules)
+library(arulesViz)
+inspectDT(rules)
+
+
+inspect(sort(rules, by = "lift")[1:5])
+inspect(sort(rules, by = "confidence"))
+great_conf<-subset(rules, confidence > 0.50) 
+great_conf
+```
+

@@ -1,0 +1,54 @@
+---
+title: "Assoc-Python"
+output: html_document
+---
+```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:/Users/User/anaconda3/python')
+```
+
+```{python, include=TRUE}
+import pandas as pd
+from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules
+
+```
+```{python}
+mydata=pd.read_csv('./data/simple-txn-binary.csv')
+mydata
+
+#Ignore the first column
+subset_basket=mydata.drop(['Transaction ID'], axis = 1)
+
+#http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/#example-1-generating-frequent-itemsets
+apriori(subset_basket, min_support=0.6)
+apriori(subset_basket, min_support=0.6, use_colnames=True)
+frequent_itemsets = apriori(subset_basket, min_support=0.01, use_colnames=True)
+frequent_itemsets
+frequent_itemsets = apriori(subset_basket, min_support=0.01, use_colnames=True)
+frequent_itemsets
+frequent_itemsets['length'] = frequent_itemsets['itemsets'].apply(lambda x: len(x))
+frequent_itemsets
+
+frequent_itemsets[ (frequent_itemsets['length'] == 2) &
+                   (frequent_itemsets['support'] >= 0.01) ]
+
+
+```
+
+```{python}
+#http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
+rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1.1)
+rules
+
+rules["antecedent_len"] = rules["antecedents"].apply(lambda x: len(x))
+rules
+
+#Single antecdent
+
+rules[ (rules['antecedent_len'] == 1) &
+       (rules['confidence'] > 0.5) &
+       (rules['lift'] > 1.1) ]
+```
+
+

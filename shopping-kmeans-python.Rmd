@@ -13,6 +13,7 @@ matplotlib$use("Agg", force = TRUE)
 ```{python echo=TRUE}
 
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from yellowbrick.cluster import SilhouetteVisualizer
@@ -24,28 +25,43 @@ shopping_original.head()
 shopping_original
 shopping_df = shopping_original.drop(columns="CaseNo")
 shopping_df
-
+scaler = StandardScaler()
+scaler.fit(shopping_df)
+shopping_df_transformed=scaler.transform(shopping_df)
+shopping_df_transformed
 cluster_range = range(1, 10)
 cluster_errors = []
 for num_clusters in cluster_range:
     clusters=KMeans(num_clusters)
-    clusters.fit(shopping_df)
+    clusters.fit(shopping_df_transformed)
     cluster_errors.append(clusters.inertia_)
     
 plt.figure(figsize=(6,4))
 plt.plot(cluster_range,cluster_errors,marker="o")
 plt.show()
 
-#Silhouette width for 7 cluster solution
+#Sil score
+
+cluster_range = range(1, 10)
+sil_vals = []
+for num_clusters in cluster_range:
+    clusterer=KMeans(num_clusters)
+    cluster_labels=clusters.fit_predict(shopping_df_transformed)
+    sil_avg=silhouette_score(shopping_df_transformed, cluster_labels)
+    print("For n_clusters =", num_clusters,
+          "The average silhouette_score is :", sil_avg)
+    sil_vals.append(sil_avg)
+    
+#Silhouette plot for 7 cluster solution
 clusters2=KMeans(7)
 visualizer = SilhouetteVisualizer(clusters2)
-visualizer.fit(shopping_df)
+visualizer.fit(shopping_df_transformed)
 #show the plot
 visualizer.show()
 
 
 k=3
-model=KMeans(k).fit(shopping_df)
+model=KMeans(k).fit(shopping_df_transformed)
 print(model)
 print(model.labels_)
 centroids=model.cluster_centers_
@@ -53,11 +69,11 @@ print(centroids)
 shopping_df["clusterid"]=model.labels_
 
 #First Cluster
-shopping_df[shopping_df.clusterid==0]
+shopping_df[shopping_df_transformed.clusterid==0]
 #Second
-shopping_df[shopping_df.clusterid==1]
+shopping_df[shopping_df_transformed.clusterid==1]
 #Third
-shopping_df[shopping_df.clusterid==2]
+shopping_df[shopping_df_transformed.clusterid==2]
 
 
 ```

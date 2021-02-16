@@ -11,7 +11,7 @@
 
 
 
-<title>Shopping-Kmeans-Python</title>
+<title>Assoc-Python</title>
 
 <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -326,164 +326,126 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Shopping-Kmeans-Python</h1>
+<h1 class="title toc-ignore">Assoc-Python</h1>
 
 </div>
 
 
-<pre class="python"><code>
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-from yellowbrick.cluster import SilhouetteVisualizer
-import pandas as pd
-shopping_original=pd.read_csv(&#39;./data/Shopping_Data.csv&#39;)
-# Examine data
-shopping_original.head()</code></pre>
-<pre><code>##    CaseNo  V1  V2  V3  V4  V5  V6
-## 0       1   6   4   7   3   2   3
-## 1       2   2   3   1   4   5   4
-## 2       3   7   2   6   4   1   3
-## 3       4   4   6   4   5   3   6
-## 4       5   1   3   2   2   6   4</code></pre>
-<pre class="python"><code>shopping_original</code></pre>
-<pre><code>##     CaseNo  V1  V2  V3  V4  V5  V6
-## 0        1   6   4   7   3   2   3
-## 1        2   2   3   1   4   5   4
-## 2        3   7   2   6   4   1   3
-## 3        4   4   6   4   5   3   6
-## 4        5   1   3   2   2   6   4
-## 5        6   6   4   6   3   3   4
-## 6        7   5   3   6   3   3   4
-## 7        8   7   3   7   4   1   4
-## 8        9   2   4   3   3   6   3
-## 9       10   3   5   3   6   4   6
-## 10      11   1   3   2   3   5   3
-## 11      12   5   4   5   4   2   4
-## 12      13   2   2   1   5   4   4
-## 13      14   4   6   4   6   4   7
-## 14      15   6   5   4   2   1   4
-## 15      16   3   5   4   6   4   7
-## 16      17   4   4   7   2   2   5
-## 17      18   3   7   2   6   4   3
-## 18      19   4   6   3   7   2   7
-## 19      20   2   3   2   4   7   2</code></pre>
-<pre class="python"><code>shopping_df = shopping_original.drop(columns=&quot;CaseNo&quot;)
-shopping_df</code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6
-## 0    6   4   7   3   2   3
-## 1    2   3   1   4   5   4
-## 2    7   2   6   4   1   3
-## 3    4   6   4   5   3   6
-## 4    1   3   2   2   6   4
-## 5    6   4   6   3   3   4
-## 6    5   3   6   3   3   4
-## 7    7   3   7   4   1   4
-## 8    2   4   3   3   6   3
-## 9    3   5   3   6   4   6
-## 10   1   3   2   3   5   3
-## 11   5   4   5   4   2   4
-## 12   2   2   1   5   4   4
-## 13   4   6   4   6   4   7
-## 14   6   5   4   2   1   4
-## 15   3   5   4   6   4   7
-## 16   4   4   7   2   2   5
-## 17   3   7   2   6   4   3
-## 18   4   6   3   7   2   7
-## 19   2   3   2   4   7   2</code></pre>
-<pre class="python"><code>cluster_range = range(1, 10)
-cluster_errors = []
-for num_clusters in cluster_range:
-    clusters=KMeans(num_clusters)
-    clusters.fit(shopping_df)
-    cluster_errors.append(clusters.inertia_)
-    </code></pre>
-<pre><code>## KMeans(n_clusters=1)
-## KMeans(n_clusters=2)
-## KMeans(n_clusters=3)
-## KMeans(n_clusters=4)
-## KMeans(n_clusters=5)
-## KMeans(n_clusters=6)
-## KMeans(n_clusters=7)
-## KMeans()
-## KMeans(n_clusters=9)</code></pre>
-<pre class="python"><code>plt.figure(figsize=(6,4))
-plt.plot(cluster_range,cluster_errors,marker=&quot;o&quot;)
-plt.show()
+<pre class="python"><code>import pandas as pd
+from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules</code></pre>
+<pre class="python"><code>mydata=pd.read_csv(&#39;./data/simple-txn-binary.csv&#39;)
+mydata
 
-#Sil score</code></pre>
-<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-1-1.png" width="576" /></p>
-<pre class="python"><code>cluster_range = range(1, 10)
-sil_vals = []
-for num_clusters in cluster_range:
-    clusterer=KMeans(num_clusters)
-    cluster_labels=clusters.fit_predict(shopping_df)
-    sil_avg=silhouette_score(shopping_df, cluster_labels)
-    print(&quot;For n_clusters =&quot;, num_clusters,
-          &quot;The average silhouette_score is :&quot;, sil_avg)
-    sil_vals.append(sil_avg)
-    
-#Silhouette plot for 7 cluster solution</code></pre>
-<pre><code>## For n_clusters = 1 The average silhouette_score is : 0.29387104443620593
-## For n_clusters = 2 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 3 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 4 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 5 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 6 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 7 The average silhouette_score is : 0.24720322758543664
-## For n_clusters = 8 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 9 The average silhouette_score is : 0.29387104443620593</code></pre>
-<pre class="python"><code>clusters2=KMeans(7)
-visualizer = SilhouetteVisualizer(clusters2)
-visualizer.fit(shopping_df)
-#show the plot</code></pre>
-<pre><code>## SilhouetteVisualizer(ax=&lt;AxesSubplot:&gt;, estimator=KMeans(n_clusters=7))</code></pre>
-<pre class="python"><code>visualizer.show()
-</code></pre>
-<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-1-2.png" width="576" /></p>
-<pre class="python"><code>k=3
-model=KMeans(k).fit(shopping_df)
-print(model)</code></pre>
-<pre><code>## KMeans(n_clusters=3)</code></pre>
-<pre class="python"><code>print(model.labels_)</code></pre>
-<pre><code>## [0 1 0 2 1 0 0 0 1 2 1 0 1 2 0 2 0 2 2 1]</code></pre>
-<pre class="python"><code>centroids=model.cluster_centers_
-print(centroids)</code></pre>
-<pre><code>## [[5.75       3.625      6.         3.125      1.875      3.875     ]
-##  [1.66666667 3.         1.83333333 3.5        5.5        3.33333333]
-##  [3.5        5.83333333 3.33333333 6.         3.5        6.        ]]</code></pre>
-<pre class="python"><code>shopping_df[&quot;clusterid&quot;]=model.labels_
+#Ignore the first column</code></pre>
+<pre><code>##    Transaction ID  Bread  Cheese   Juice  Milk
+## 0             100      1        1      0     0
+## 1             200      1        1      1     0
+## 2             300      1        0      0     1
+## 3             400      0        1      1     1</code></pre>
+<pre class="python"><code>subset_basket=mydata.drop([&#39;Transaction ID&#39;], axis = 1)
 
-#First Cluster
-shopping_df[shopping_df.clusterid==0]
-#Second</code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
-## 0    6   4   7   3   2   3          0
-## 2    7   2   6   4   1   3          0
-## 5    6   4   6   3   3   4          0
-## 6    5   3   6   3   3   4          0
-## 7    7   3   7   4   1   4          0
-## 11   5   4   5   4   2   4          0
-## 14   6   5   4   2   1   4          0
-## 16   4   4   7   2   2   5          0</code></pre>
-<pre class="python"><code>shopping_df[shopping_df.clusterid==1]
-#Third</code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
-## 1    2   3   1   4   5   4          1
-## 4    1   3   2   2   6   4          1
-## 8    2   4   3   3   6   3          1
-## 10   1   3   2   3   5   3          1
-## 12   2   2   1   5   4   4          1
-## 19   2   3   2   4   7   2          1</code></pre>
-<pre class="python"><code>shopping_df[shopping_df.clusterid==2]
+#http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/#example-1-generating-frequent-itemsets
+apriori(subset_basket, min_support=0.6)</code></pre>
+<pre><code>##    support itemsets
+## 0     0.75      (0)
+## 1     0.75      (1)</code></pre>
+<pre class="python"><code>apriori(subset_basket, min_support=0.6, use_colnames=True)</code></pre>
+<pre><code>##    support   itemsets
+## 0     0.75    (Bread)
+## 1     0.75  (Cheese )</code></pre>
+<pre class="python"><code>frequent_itemsets = apriori(subset_basket, min_support=0.01, use_colnames=True)
+frequent_itemsets</code></pre>
+<pre><code>##     support                 itemsets
+## 0      0.75                  (Bread)
+## 1      0.75                (Cheese )
+## 2      0.50                  (Juice)
+## 3      0.50                   (Milk)
+## 4      0.50         (Cheese , Bread)
+## 5      0.25           (Bread, Juice)
+## 6      0.25            (Milk, Bread)
+## 7      0.50         (Cheese , Juice)
+## 8      0.25          (Milk, Cheese )
+## 9      0.25            (Milk, Juice)
+## 10     0.25  (Cheese , Bread, Juice)
+## 11     0.25   (Milk, Cheese , Juice)</code></pre>
+<pre class="python"><code>frequent_itemsets = apriori(subset_basket, min_support=0.01, use_colnames=True)
+frequent_itemsets</code></pre>
+<pre><code>##     support                 itemsets
+## 0      0.75                  (Bread)
+## 1      0.75                (Cheese )
+## 2      0.50                  (Juice)
+## 3      0.50                   (Milk)
+## 4      0.50         (Cheese , Bread)
+## 5      0.25           (Bread, Juice)
+## 6      0.25            (Milk, Bread)
+## 7      0.50         (Cheese , Juice)
+## 8      0.25          (Milk, Cheese )
+## 9      0.25            (Milk, Juice)
+## 10     0.25  (Cheese , Bread, Juice)
+## 11     0.25   (Milk, Cheese , Juice)</code></pre>
+<pre class="python"><code>frequent_itemsets[&#39;length&#39;] = frequent_itemsets[&#39;itemsets&#39;].apply(lambda x: len(x))
+frequent_itemsets</code></pre>
+<pre><code>##     support                 itemsets  length
+## 0      0.75                  (Bread)       1
+## 1      0.75                (Cheese )       1
+## 2      0.50                  (Juice)       1
+## 3      0.50                   (Milk)       1
+## 4      0.50         (Cheese , Bread)       2
+## 5      0.25           (Bread, Juice)       2
+## 6      0.25            (Milk, Bread)       2
+## 7      0.50         (Cheese , Juice)       2
+## 8      0.25          (Milk, Cheese )       2
+## 9      0.25            (Milk, Juice)       2
+## 10     0.25  (Cheese , Bread, Juice)       3
+## 11     0.25   (Milk, Cheese , Juice)       3</code></pre>
+<pre class="python"><code>frequent_itemsets[ (frequent_itemsets[&#39;length&#39;] == 2) &amp;
+                   (frequent_itemsets[&#39;support&#39;] &gt;= 0.01) ]
 </code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
-## 3    4   6   4   5   3   6          2
-## 9    3   5   3   6   4   6          2
-## 13   4   6   4   6   4   7          2
-## 15   3   5   4   6   4   7          2
-## 17   3   7   2   6   4   3          2
-## 18   4   6   3   7   2   7          2</code></pre>
+<pre><code>##    support          itemsets  length
+## 4     0.50  (Cheese , Bread)       2
+## 5     0.25    (Bread, Juice)       2
+## 6     0.25     (Milk, Bread)       2
+## 7     0.50  (Cheese , Juice)       2
+## 8     0.25   (Milk, Cheese )       2
+## 9     0.25     (Milk, Juice)       2</code></pre>
+<pre class="python"><code>#http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
+rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.1)
+rules</code></pre>
+<pre><code>##        antecedents      consequents  ...  leverage  conviction
+## 0        (Cheese )          (Juice)  ...    0.1250       1.500
+## 1          (Juice)        (Cheese )  ...    0.1250         inf
+## 2   (Bread, Juice)        (Cheese )  ...    0.0625         inf
+## 3        (Cheese )   (Bread, Juice)  ...    0.0625       1.125
+## 4  (Milk, Cheese )          (Juice)  ...    0.1250         inf
+## 5    (Milk, Juice)        (Cheese )  ...    0.0625         inf
+## 6        (Cheese )    (Milk, Juice)  ...    0.0625       1.125
+## 7          (Juice)  (Milk, Cheese )  ...    0.1250       1.500
+## 
+## [8 rows x 9 columns]</code></pre>
+<pre class="python"><code>rules[&quot;antecedent_len&quot;] = rules[&quot;antecedents&quot;].apply(lambda x: len(x))
+rules
+
+#Single antecdent</code></pre>
+<pre><code>##        antecedents      consequents  ...  conviction  antecedent_len
+## 0        (Cheese )          (Juice)  ...       1.500               1
+## 1          (Juice)        (Cheese )  ...         inf               1
+## 2   (Bread, Juice)        (Cheese )  ...         inf               2
+## 3        (Cheese )   (Bread, Juice)  ...       1.125               1
+## 4  (Milk, Cheese )          (Juice)  ...         inf               2
+## 5    (Milk, Juice)        (Cheese )  ...         inf               2
+## 6        (Cheese )    (Milk, Juice)  ...       1.125               1
+## 7          (Juice)  (Milk, Cheese )  ...       1.500               1
+## 
+## [8 rows x 10 columns]</code></pre>
+<pre class="python"><code>rules[ (rules[&#39;antecedent_len&#39;] == 1) &amp;
+       (rules[&#39;confidence&#39;] &gt; 0.5) &amp;
+       (rules[&#39;lift&#39;] &gt; 1.1) ]</code></pre>
+<pre><code>##   antecedents consequents  ...  conviction  antecedent_len
+## 0   (Cheese )     (Juice)  ...         1.5               1
+## 1     (Juice)   (Cheese )  ...         inf               1
+## 
+## [2 rows x 10 columns]</code></pre>
 
 <div id="footer">
 <p>Copyright &copy; 2021,  Angeline Fernando,  All rights reserved.</p>
