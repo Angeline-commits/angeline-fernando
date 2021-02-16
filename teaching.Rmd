@@ -4,6 +4,13 @@
 
 <ul>
 <li>
+<p><strong>EDA with libraries</strong> <a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and  <a href="EDA-python.html" target="_blank" rel="noopener">Python code</a> </p>
+</li>
+</ul>
+
+
+<ul>
+<li>
 <p><strong>Descriptive Analytics-Simple Summary </strong> <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and  <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a> </p>
 </li>
 </ul>

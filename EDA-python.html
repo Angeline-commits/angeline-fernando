@@ -11,7 +11,7 @@
 
 
 
-<title>teaching.utf8</title>
+<title>EDA-python</title>
 
 <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -326,66 +326,60 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">EDA-python</h1>
 
 </div>
 
 
-<h1>
-Teaching
-</h1>
-<h2>
-Business Analytics
-</h2>
-<p>
- 
-</p>
-<ul>
-<li>
-<p>
-<strong>EDA with libraries</strong> <a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and <a href="EDA-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Simple Summary </strong> <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Univariate </strong><a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and <a href="univariate-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Bivariate </strong><a href="bivariate-r.html" target="_blank" rel="noopener">R code </a> and <a>Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-Types and Applications <a href="shopping-kmeans.html" target="_blank" rel="noopener">R code </a> and <a href="shopping-kmeans-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Logistic Regression </strong><a href="logistic.html" target="_blank" rel="noopener">R code </a> , <a href="Logistic-Python.html" target="_blank" rel="noopener">Python code</a> and <a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Sample Interpretation</a>
-</p>
-</li>
-<li>
-<p>
-<strong>Logistic Regression- Another Python example-admit data</strong> <a href="Logit-admit-python2.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
+<pre class="python"><code># Two new reports would be created for visualisation
+import pandas as pd
+import pandas_profiling as pp
+import sweetviz as sv </code></pre>
+<pre class="python"><code>
+###  Data Source: http://archive.ics.uci.edu/ml/datasets/Facebook+metrics   
+mydata=pd.read_csv(&#39;./data/dataset_Facebook.csv&#39;)
+type(mydata)</code></pre>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</code></pre>
+<pre class="python"><code>mydata.shape</code></pre>
+<pre><code>## (500, 11)</code></pre>
+<pre class="python"><code>rep=pp.ProfileReport(mydata)
+#Uncomment the line below to see the report
+#rep.to_file(&quot;Report.html&quot;)</code></pre>
+<pre class="python"><code>sweetviz_report = sv.analyze(mydata)#display the report</code></pre>
+<pre><code>## 
+                                             |          | [  0%]   00:00 -&gt; (? left)
+[Summarizing dataframe]                      |          | [  0%]   00:00 -&gt; (? left)
+Feature: Category                            |▊         | [  8%]   00:00 -&gt; (00:00 left)
+Feature: Category                            |█▋        | [ 17%]   00:01 -&gt; (00:07 left)
+Feature: Page total likes                    |█▋        | [ 17%]   00:01 -&gt; (00:07 left)
+Feature: Page total likes                    |██▌       | [ 25%]   00:01 -&gt; (00:05 left)
+Feature: Type                                |██▌       | [ 25%]   00:01 -&gt; (00:05 left)
+Feature: Type                                |███▎      | [ 33%]   00:02 -&gt; (00:03 left)
+Feature: Post Month                          |███▎      | [ 33%]   00:02 -&gt; (00:03 left)
+Feature: Post Month                          |████▏     | [ 42%]   00:02 -&gt; (00:03 left)
+Feature: Post Hour                           |████▏     | [ 42%]   00:02 -&gt; (00:03 left)
+Feature: Post Hour                           |█████     | [ 50%]   00:03 -&gt; (00:02 left)
+Feature: Post Weekday                        |█████     | [ 50%]   00:03 -&gt; (00:02 left)
+Feature: Post Weekday                        |█████▊    | [ 58%]   00:03 -&gt; (00:01 left)
+Feature: Paid                                |█████▊    | [ 58%]   00:03 -&gt; (00:01 left)
+Feature: Paid                                |██████▋   | [ 67%]   00:03 -&gt; (00:01 left)
+Feature: Lifetime Post Consumers             |██████▋   | [ 67%]   00:03 -&gt; (00:01 left)
+Feature: Lifetime Post Consumers             |███████▌  | [ 75%]   00:03 -&gt; (00:01 left)
+Feature: comment                             |███████▌  | [ 75%]   00:03 -&gt; (00:01 left)
+Feature: comment                             |████████▎ | [ 83%]   00:04 -&gt; (00:00 left)
+Feature: like                                |████████▎ | [ 83%]   00:04 -&gt; (00:00 left)
+Feature: like                                |█████████▏| [ 92%]   00:04 -&gt; (00:00 left)
+Feature: share                               |█████████▏| [ 92%]   00:04 -&gt; (00:00 left)
+Feature: share                               |██████████| [100%]   00:05 -&gt; (00:00 left)
+Feature: share                               |          | [  0%]   00:00 -&gt; (? left)    
+[Step 2/3] Processing Pairwise Features      |          | [  0%]   00:00 -&gt; (? left)
+[Step 2/3] Processing Pairwise Features      |█▊        | [ 18%]   00:00 -&gt; (00:00 left)
+[Step 2/3] Processing Pairwise Features      |          | [  0%]   00:00 -&gt; (? left)    
+[Step 3/3] Generating associations graph     |          | [  0%]   00:00 -&gt; (? left)
+Done! Use &#39;show&#39; commands to display/save.   |          | [  0%]   00:00 -&gt; (? left)
+Done! Use &#39;show&#39; commands to display/save.   |██████████| [100%]   00:00 -&gt; (00:00 left)</code></pre>
+<pre class="python"><code>sweetviz_report.show_html(&#39;mydata-report-sweetviz.html&#39;)</code></pre>
+<pre><code>## Report mydata-report-sweetviz.html was generated! NOTEBOOK/COLAB USERS: the web browser MAY not pop up, regardless, the report IS saved in your notebook/colab files.</code></pre>
 
 <div id="footer">
 <p>Copyright &copy; 2021,  Angeline Fernando,  All rights reserved.</p>

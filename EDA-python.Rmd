@@ -1,0 +1,40 @@
+---
+title: "EDA-python"
+output: html_document
+---
+
+
+```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:/Users/User/anaconda3/python')
+matplotlib <- import("matplotlib")
+matplotlib$use("Agg", force = TRUE)
+
+
+```
+
+```{python, include=TRUE}
+# Two new reports would be created for visualisation
+import pandas as pd
+import pandas_profiling as pp
+import sweetviz as sv 
+```
+
+```{python}
+
+###  Data Source: http://archive.ics.uci.edu/ml/datasets/Facebook+metrics   
+mydata=pd.read_csv('./data/dataset_Facebook.csv')
+type(mydata)
+mydata.shape
+```
+```{python,echo=TRUE}
+rep=pp.ProfileReport(mydata)
+#Uncomment the line below to see the report
+#rep.to_file("Report.html")
+```
+
+```{python}
+sweetviz_report = sv.analyze(mydata)#display the report
+sweetviz_report.show_html('mydata-report-sweetviz.html')
+```
+

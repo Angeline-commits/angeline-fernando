@@ -11,7 +11,7 @@
 
 
 
-<title>teaching.utf8</title>
+<title>EDA-R</title>
 
 <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -326,66 +326,39 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">EDA-R</h1>
 
 </div>
 
 
-<h1>
-Teaching
-</h1>
-<h2>
-Business Analytics
-</h2>
-<p>
- 
-</p>
-<ul>
-<li>
-<p>
-<strong>EDA with libraries</strong> <a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and <a href="EDA-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Simple Summary </strong> <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Univariate </strong><a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and <a href="univariate-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Bivariate </strong><a href="bivariate-r.html" target="_blank" rel="noopener">R code </a> and <a>Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-Types and Applications <a href="shopping-kmeans.html" target="_blank" rel="noopener">R code </a> and <a href="shopping-kmeans-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Logistic Regression </strong><a href="logistic.html" target="_blank" rel="noopener">R code </a> , <a href="Logistic-Python.html" target="_blank" rel="noopener">Python code</a> and <a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Sample Interpretation</a>
-</p>
-</li>
-<li>
-<p>
-<strong>Logistic Regression- Another Python example-admit data</strong> <a href="Logit-admit-python2.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
+<div id="simple-pre-process" class="section level2">
+<h2>Simple pre-process</h2>
+<p>This is an analysis based on the UCI dataset on Facebook performance metrics Data Source: <a href="http://archive.ics.uci.edu/ml/datasets/Facebook+metrics" class="uri">http://archive.ics.uci.edu/ml/datasets/Facebook+metrics</a></p>
+<p>Based on the paper: (Moro et al., 2016) S. Moro, P. Rita and B. Vala. Predicting social media performance metrics and evaluation of the impact on brand building: A data mining approach. Journal of Business Research, Elsevier, In press.</p>
+<p>Available at: <a href="http://dx.doi.org/10.1016/j.jbusres.2016.02.010" class="uri">http://dx.doi.org/10.1016/j.jbusres.2016.02.010</a></p>
+<div id="read-dataset" class="section level3">
+<h3>Read dataset</h3>
+<pre class="r"><code>library(DataExplorer)
+introduce(mydata)</code></pre>
+<pre><code>##   rows columns discrete_columns continuous_columns all_missing_columns
+## 1  500      11                1                 10                   0
+##   total_missing_values complete_rows total_observations memory_usage
+## 1                    6           495               5500        27496</code></pre>
+<pre class="r"><code>plot_intro(mydata)</code></pre>
+<p><img src="EDA-r_files/figure-html/plots-1.png" width="672" /></p>
+<pre class="r"><code>plot_missing(mydata) </code></pre>
+<p><img src="EDA-r_files/figure-html/plots-2.png" width="672" /></p>
+<pre class="r"><code>plot_bar(mydata)</code></pre>
+<p><img src="EDA-r_files/figure-html/plots-3.png" width="672" /></p>
+<pre class="r"><code>plot_histogram(mydata)</code></pre>
+<p><img src="EDA-r_files/figure-html/plots-4.png" width="672" /></p>
+<pre class="r"><code>plot_correlation(mydata)</code></pre>
+<pre><code>## Warning: Removed 72 rows containing missing values (geom_text).</code></pre>
+<p><img src="EDA-r_files/figure-html/plots-5.png" width="672" /></p>
+<pre class="r"><code>plot_density(mydata)</code></pre>
+<p><img src="EDA-r_files/figure-html/plots-6.png" width="672" /></p>
+</div>
+</div>
 
 <div id="footer">
 <p>Copyright &copy; 2021,  Angeline Fernando,  All rights reserved.</p>

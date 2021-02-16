@@ -1,0 +1,38 @@
+---
+title: "EDA-R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Simple pre-process
+
+This is an analysis based on the UCI dataset on Facebook performance metrics
+Data Source: http://archive.ics.uci.edu/ml/datasets/Facebook+metrics   
+
+Based on the paper:
+ (Moro et al., 2016) S. Moro, P. Rita and B. Vala. Predicting social media performance metrics and evaluation 
+   of the impact on brand building: A data mining approach. Journal of Business Research, Elsevier, In press.
+ 
+   Available at: http://dx.doi.org/10.1016/j.jbusres.2016.02.010
+   
+### Read dataset
+```{r read}
+mydata<-read.csv("./data/dataset_Facebook.csv")
+#Variable-Missing values and Factor level issues
+
+```
+```{r plots, echo=TRUE}
+library(DataExplorer)
+introduce(mydata)
+plot_intro(mydata)
+plot_missing(mydata) 
+plot_bar(mydata)
+plot_histogram(mydata)
+plot_correlation(mydata)
+plot_density(mydata)
+```
+
+ 
