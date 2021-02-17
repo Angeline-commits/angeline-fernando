@@ -13,7 +13,7 @@ library(dplyr)
 ```
 ```{r}
 #file is in csv format for basket 
-df<-read.csv("./data/simple-txn-file.csv")
+df<-read.csv("./data/simple-txn-file.csv",header = FALSE)
 df
 tr<-read.transactions("./data/simple-txn-file.csv",format="basket",sep=",")
 rules <- apriori (tr,parameter = 
