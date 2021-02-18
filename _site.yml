@@ -14,9 +14,9 @@ navbar:
   right:
     - icon: fa-envelope fa-lg
       href: contact.html
-    - icon: fa-google 
+    - icon: fa fa-google 
       href: https://scholar.google.com/citations?user=BprGSCkAAAAJ&hl=en
-    - icon: fa-linkedin fa-lg
+    - icon: fa fa-linkedin
       href: https://www.linkedin.com/in/angelinegautami/
 output:
   html_document:
