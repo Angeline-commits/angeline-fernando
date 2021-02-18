@@ -7,13 +7,14 @@ library(reticulate)
 use_python('E:/Users/User/anaconda3/python')
 ```
 
+
 ```{python, include=TRUE}
 import pandas as pd
 from mlxtend.frequent_patterns import apriori
 from mlxtend.frequent_patterns import association_rules
 
 ```
-```{python}
+```{python results='asis'}
 mydata=pd.read_csv('./data/simple-txn-binary.csv')
 mydata
 
@@ -46,9 +47,10 @@ rules
 
 #Single antecdent
 
-rules[ (rules['antecedent_len'] == 1) &
+allrules=rules[ (rules['antecedent_len'] == 1) &
        (rules['confidence'] > 0.5) &
        (rules['lift'] > 1.1) ]
+print(allrules)
 ```
 
 
