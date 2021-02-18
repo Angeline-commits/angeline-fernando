@@ -1,5 +1,5 @@
 ---
-title: "Shopping-Kmeans-Python-2"
+title: "Shopping-Kmeans-Python"
 output: html_document
 ---
 
