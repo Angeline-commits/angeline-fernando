@@ -487,11 +487,11 @@ visualizer = SilhouetteVisualizer(model,colors=&#39;yellowbrick&#39;)
 visualizer.fit(shopping_df_scaled)        # Fit the data to the visualizer</code></pre>
 <pre><code>## SilhouetteVisualizer(ax=&lt;AxesSubplot:&gt;, colors=&#39;yellowbrick&#39;,
 ##                      estimator=KMeans(random_state=10))</code></pre>
-<pre class="python"><code>visualizer.show()  </code></pre>
-<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-5-2.png" width="576" /><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-5-3.png" width="576" /></p>
-<pre class="python"><code>#https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+<pre class="python"><code>visualizer.show()  
 
-k=3
+#https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html</code></pre>
+<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-5-2.png" width="576" /></p>
+<pre class="python"><code>k=3
 model=KMeans(n_clusters=k,random_state=10).fit(shopping_df_scaled)
 print(model)</code></pre>
 <pre><code>## KMeans(n_clusters=3, random_state=10)</code></pre>

@@ -88,8 +88,6 @@ visualizer = SilhouetteVisualizer(model,colors='yellowbrick')
 visualizer.fit(shopping_df_scaled)        # Fit the data to the visualizer
 visualizer.show()  
 
-```
-```{python}
 #https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 
 k=3
