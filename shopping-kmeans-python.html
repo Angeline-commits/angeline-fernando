@@ -11,7 +11,7 @@
 
 
 
-<title>Shopping-Kmeans-Python</title>
+<title>Shopping-Kmeans-Python-2</title>
 
 <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -326,18 +326,19 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Shopping-Kmeans-Python</h1>
+<h1 class="title toc-ignore">Shopping-Kmeans-Python-2</h1>
 
 </div>
 
 
-<pre class="python"><code>
-import matplotlib.pyplot as plt
+<pre class="python"><code>import matplotlib.pyplot as plt
+from sklearn import preprocessing
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-from yellowbrick.cluster import SilhouetteVisualizer
 import pandas as pd
-shopping_original=pd.read_csv(&#39;./data/Shopping_Data.csv&#39;)
+from yellowbrick.cluster import KElbowVisualizer
+from yellowbrick.cluster import SilhouetteVisualizer</code></pre>
+<pre class="python"><code>shopping_original=pd.read_csv(&#39;./data/Shopping_Data.csv&#39;)
 # Examine data
 shopping_original.head()</code></pre>
 <pre><code>##    CaseNo  V1  V2  V3  V4  V5  V6
@@ -391,11 +392,40 @@ shopping_df</code></pre>
 ## 17   3   7   2   6   4   3
 ## 18   4   6   3   7   2   7
 ## 19   2   3   2   4   7   2</code></pre>
-<pre class="python"><code>cluster_range = range(1, 10)
+<pre class="python"><code>scaler = preprocessing.StandardScaler().fit(shopping_df)
+scaler
+#Z-transform
+</code></pre>
+<pre><code>## StandardScaler()</code></pre>
+<pre class="python"><code>shopping_df_scaled = pd.DataFrame(scaler.fit_transform(shopping_df), columns=shopping_df.columns, index=shopping_df.index)
+shopping_df_scaled</code></pre>
+<pre><code>##           V1        V2        V3        V4        V5        V6
+## 0   1.161314 -0.072739  1.554929 -0.743311 -0.844581 -0.925548
+## 1  -0.999270 -0.800132 -1.503948 -0.067574  0.902828 -0.239957
+## 2   1.701460 -1.527525  1.045116 -0.067574 -1.427050 -0.925548
+## 3   0.081022  1.382047  0.025491  0.608164 -0.262111  1.131225
+## 4  -1.539416 -0.800132 -0.994135 -1.419048  1.485297 -0.239957
+## 5   1.161314 -0.072739  1.045116 -0.743311 -0.262111 -0.239957
+## 6   0.621168 -0.800132  1.045116 -0.743311 -0.262111 -0.239957
+## 7   1.701460 -0.800132  1.554929 -0.067574 -1.427050 -0.239957
+## 8  -0.999270 -0.072739 -0.484322 -0.743311  1.485297 -0.925548
+## 9  -0.459124  0.654654 -0.484322  1.283901  0.320358  1.131225
+## 10 -1.539416 -0.800132 -0.994135 -0.743311  0.902828 -0.925548
+## 11  0.621168 -0.072739  0.535303 -0.067574 -0.844581 -0.239957
+## 12 -0.999270 -1.527525 -1.503948  0.608164  0.320358 -0.239957
+## 13  0.081022  1.382047  0.025491  1.283901  0.320358  1.816817
+## 14  1.161314  0.654654  0.025491 -1.419048 -1.427050 -0.239957
+## 15 -0.459124  0.654654  0.025491  1.283901  0.320358  1.816817
+## 16  0.081022 -0.072739  1.554929 -1.419048 -0.844581  0.445634
+## 17 -0.459124  2.109440 -0.994135  1.283901  0.320358 -0.925548
+## 18  0.081022  1.382047 -0.484322  1.959638 -0.844581  1.816817
+## 19 -0.999270 -0.800132 -0.994135 -0.067574  2.067766 -1.611139</code></pre>
+<pre class="python"><code>#Elbow with default libs
+cluster_range = range(1, 10)
 cluster_errors = []
 for num_clusters in cluster_range:
     clusters=KMeans(num_clusters)
-    clusters.fit(shopping_df)
+    clusters.fit(shopping_df_scaled)
     cluster_errors.append(clusters.inertia_)
     </code></pre>
 <pre><code>## KMeans(n_clusters=1)
@@ -409,81 +439,105 @@ for num_clusters in cluster_range:
 ## KMeans(n_clusters=9)</code></pre>
 <pre class="python"><code>plt.figure(figsize=(6,4))
 plt.plot(cluster_range,cluster_errors,marker=&quot;o&quot;)
-plt.show()
+plt.show()</code></pre>
+<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-3-1.png" width="576" /></p>
+<pre class="python"><code>#https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html
+#Silhouette scores from library
 
-#Sil score</code></pre>
-<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-1-1.png" width="576" /></p>
-<pre class="python"><code>cluster_range = range(1, 10)
-sil_vals = []
-for num_clusters in cluster_range:
-    clusterer=KMeans(num_clusters)
-    cluster_labels=clusters.fit_predict(shopping_df)
-    sil_avg=silhouette_score(shopping_df, cluster_labels)
-    print(&quot;For n_clusters =&quot;, num_clusters,
-          &quot;The average silhouette_score is :&quot;, sil_avg)
-    sil_vals.append(sil_avg)
-    
-#Silhouette plot for 7 cluster solution</code></pre>
-<pre><code>## For n_clusters = 1 The average silhouette_score is : 0.29387104443620593
-## For n_clusters = 2 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 3 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 4 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 5 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 6 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 7 The average silhouette_score is : 0.24720322758543664
-## For n_clusters = 8 The average silhouette_score is : 0.2501758194182898
-## For n_clusters = 9 The average silhouette_score is : 0.29387104443620593</code></pre>
-<pre class="python"><code>clusters2=KMeans(7)
-visualizer = SilhouetteVisualizer(clusters2)
-visualizer.fit(shopping_df)
-#show the plot</code></pre>
-<pre><code>## SilhouetteVisualizer(ax=&lt;AxesSubplot:&gt;, estimator=KMeans(n_clusters=7))</code></pre>
-<pre class="python"><code>visualizer.show()
-</code></pre>
-<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-1-2.png" width="576" /></p>
-<pre class="python"><code>k=3
-model=KMeans(k).fit(shopping_df)
+
+range_n_clusters = range(2, 10)
+
+for n_clusters in range_n_clusters:
+
+# Initialize the clusterer with n_clusters value and a random generator
+    # seed of 10 for reproducibility.
+    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+    cluster_labels = clusterer.fit_predict(shopping_df_scaled)
+# The silhouette_score gives the average value for all the samples.
+    # This gives a perspective into the density and separation of the formed
+    # clusters
+    silhouette_avg = silhouette_score(shopping_df_scaled, cluster_labels)
+    #Choose the one with the highest sil score
+    print(&quot;For n_clusters =&quot;, n_clusters,
+          &quot;The average silhouette_score is :&quot;, silhouette_avg)</code></pre>
+<pre><code>## For n_clusters = 2 The average silhouette_score is : 0.36837140169996013
+## For n_clusters = 3 The average silhouette_score is : 0.5268850411661666
+## For n_clusters = 4 The average silhouette_score is : 0.4999970773496992
+## For n_clusters = 5 The average silhouette_score is : 0.40768358335059157
+## For n_clusters = 6 The average silhouette_score is : 0.34160652631472255
+## For n_clusters = 7 The average silhouette_score is : 0.33008836943588704
+## For n_clusters = 8 The average silhouette_score is : 0.31849311650374795
+## For n_clusters = 9 The average silhouette_score is : 0.3020347306222007</code></pre>
+<pre class="python"><code>#Elbow with YellowBrick
+#https://www.scikit-yb.org/en/latest/api/cluster/elbow.html
+model = KMeans(random_state=10) # seed 
+visualizer = KElbowVisualizer(model, k=(1,9))
+
+visualizer.fit(shopping_df_scaled)        # Fit the data to the visualizer</code></pre>
+<pre><code>## KElbowVisualizer(ax=&lt;AxesSubplot:&gt;, estimator=KMeans(random_state=10), k=None)
+## 
+## E:\Users\User\anaconda3\lib\site-packages\sklearn\base.py:213: FutureWarning: From version 0.24, get_params will raise an AttributeError if a parameter cannot be retrieved as an instance attribute. Previously it would return None.
+##   FutureWarning)</code></pre>
+<pre class="python"><code>visualizer.show()        # Finalize and render the figure
+#Future warnng due tO Yellowbrick and sckit versions
+#Sil with Yellow Brick</code></pre>
+<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
+<pre class="python"><code>model = KMeans(random_state=10) # seed 
+visualizer = SilhouetteVisualizer(model,colors=&#39;yellowbrick&#39;)
+visualizer.fit(shopping_df_scaled)        # Fit the data to the visualizer</code></pre>
+<pre><code>## SilhouetteVisualizer(ax=&lt;AxesSubplot:&gt;, colors=&#39;yellowbrick&#39;,
+##                      estimator=KMeans(random_state=10))</code></pre>
+<pre class="python"><code>visualizer.show()  </code></pre>
+<p><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-5-2.png" width="576" /><img src="shopping-kmeans-python_files/figure-html/unnamed-chunk-5-3.png" width="576" /></p>
+<pre class="python"><code>#https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+
+k=3
+model=KMeans(n_clusters=k,random_state=10).fit(shopping_df_scaled)
 print(model)</code></pre>
-<pre><code>## KMeans(n_clusters=3)</code></pre>
+<pre><code>## KMeans(n_clusters=3, random_state=10)</code></pre>
 <pre class="python"><code>print(model.labels_)</code></pre>
 <pre><code>## [0 1 0 2 1 0 0 0 1 2 1 0 1 2 0 2 0 2 2 1]</code></pre>
 <pre class="python"><code>centroids=model.cluster_centers_
+#Profile the clusters# based on the centroids
+# Cluster 1 loads on V1 and V3
+# Cluster 2 loads on V5
+# Cluster 3 loads on V2,V4 and V6
 print(centroids)</code></pre>
-<pre><code>## [[5.75       3.625      6.         3.125      1.875      3.875     ]
-##  [1.66666667 3.         1.83333333 3.5        5.5        3.33333333]
-##  [3.5        5.83333333 3.33333333 6.         3.5        6.        ]]</code></pre>
-<pre class="python"><code>shopping_df[&quot;clusterid&quot;]=model.labels_
+<pre><code>## [[ 1.02627765 -0.34551166  1.04511612 -0.65884394 -0.91738926 -0.32565581]
+##  [-1.17931905 -0.80013226 -1.07910364 -0.40544243  1.19406221 -0.69701769]
+##  [-0.18905115  1.26081448 -0.31438452  1.28390102  0.02912347  1.13122543]]</code></pre>
+<pre class="python"><code>shopping_df_scaled[&quot;clusterid&quot;]=model.labels_
 
+#Members in the cluster
 #First Cluster
-shopping_df[shopping_df.clusterid==0]
-#Second</code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
-## 0    6   4   7   3   2   3          0
-## 2    7   2   6   4   1   3          0
-## 5    6   4   6   3   3   4          0
-## 6    5   3   6   3   3   4          0
-## 7    7   3   7   4   1   4          0
-## 11   5   4   5   4   2   4          0
-## 14   6   5   4   2   1   4          0
-## 16   4   4   7   2   2   5          0</code></pre>
-<pre class="python"><code>shopping_df[shopping_df.clusterid==1]
-#Third</code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
-## 1    2   3   1   4   5   4          1
-## 4    1   3   2   2   6   4          1
-## 8    2   4   3   3   6   3          1
-## 10   1   3   2   3   5   3          1
-## 12   2   2   1   5   4   4          1
-## 19   2   3   2   4   7   2          1</code></pre>
-<pre class="python"><code>shopping_df[shopping_df.clusterid==2]
-</code></pre>
-<pre><code>##     V1  V2  V3  V4  V5  V6  clusterid
-## 3    4   6   4   5   3   6          2
-## 9    3   5   3   6   4   6          2
-## 13   4   6   4   6   4   7          2
-## 15   3   5   4   6   4   7          2
-## 17   3   7   2   6   4   3          2
-## 18   4   6   3   7   2   7          2</code></pre>
+shopping_df_scaled[shopping_df_scaled.clusterid==0]
+#2nd</code></pre>
+<pre><code>##           V1        V2        V3        V4        V5        V6  clusterid
+## 0   1.161314 -0.072739  1.554929 -0.743311 -0.844581 -0.925548          0
+## 2   1.701460 -1.527525  1.045116 -0.067574 -1.427050 -0.925548          0
+## 5   1.161314 -0.072739  1.045116 -0.743311 -0.262111 -0.239957          0
+## 6   0.621168 -0.800132  1.045116 -0.743311 -0.262111 -0.239957          0
+## 7   1.701460 -0.800132  1.554929 -0.067574 -1.427050 -0.239957          0
+## 11  0.621168 -0.072739  0.535303 -0.067574 -0.844581 -0.239957          0
+## 14  1.161314  0.654654  0.025491 -1.419048 -1.427050 -0.239957          0
+## 16  0.081022 -0.072739  1.554929 -1.419048 -0.844581  0.445634          0</code></pre>
+<pre class="python"><code>shopping_df_scaled[shopping_df_scaled.clusterid==1]
+#3rd</code></pre>
+<pre><code>##           V1        V2        V3        V4        V5        V6  clusterid
+## 1  -0.999270 -0.800132 -1.503948 -0.067574  0.902828 -0.239957          1
+## 4  -1.539416 -0.800132 -0.994135 -1.419048  1.485297 -0.239957          1
+## 8  -0.999270 -0.072739 -0.484322 -0.743311  1.485297 -0.925548          1
+## 10 -1.539416 -0.800132 -0.994135 -0.743311  0.902828 -0.925548          1
+## 12 -0.999270 -1.527525 -1.503948  0.608164  0.320358 -0.239957          1
+## 19 -0.999270 -0.800132 -0.994135 -0.067574  2.067766 -1.611139          1</code></pre>
+<pre class="python"><code>shopping_df_scaled[shopping_df_scaled.clusterid==2]</code></pre>
+<pre><code>##           V1        V2        V3        V4        V5        V6  clusterid
+## 3   0.081022  1.382047  0.025491  0.608164 -0.262111  1.131225          2
+## 9  -0.459124  0.654654 -0.484322  1.283901  0.320358  1.131225          2
+## 13  0.081022  1.382047  0.025491  1.283901  0.320358  1.816817          2
+## 15 -0.459124  0.654654  0.025491  1.283901  0.320358  1.816817          2
+## 17 -0.459124  2.109440 -0.994135  1.283901  0.320358 -0.925548          2
+## 18  0.081022  1.382047 -0.484322  1.959638 -0.844581  1.816817          2</code></pre>
 
 <div id="footer">
 <p>Copyright &copy; 2021,  Angeline Fernando,  All rights reserved.</p>
