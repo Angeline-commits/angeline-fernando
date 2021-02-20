@@ -20,6 +20,13 @@
 </li>
 </ul>
 
+<ul>
+<li>
+<p><strong>Download Datsets </strong> <a href="https://bit.ly/3duEFfn" download>BA Datasets For Class</a> </p>
+</li>
+</ul>
+
+
 
 
  
