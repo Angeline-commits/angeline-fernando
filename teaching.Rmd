@@ -48,3 +48,9 @@
 <p><strong>Logistic Regression- Another Python example-admit data</strong> <a href="Logit-admit-python2.html" target="_blank" rel="noopener">Python code</a></p>
 </li>
 </ul>
+
+<ul>
+<li>
+<p><strong>Neural Network Regression :  <a href="Regression-ANN-Python.html" target="_blank" rel="noopener">Python code</a> </p>
+</li>
+</ul>

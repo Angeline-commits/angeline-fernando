@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Regression-ANN-Python</title>
+
+<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Angeline G Fernando</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="BA-PGDM-2021.html">PGDM-2021</a>
+</li>
+<li>
+  <a href="BA-PGPM-Flex-2021.html">PGPM-Flex-2021</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fas fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://scholar.google.com/citations?user=BprGSCkAAAAJ&amp;hl=en">
+    <span class="fa fa fa fa-google"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/angelinegautami/">
+    <span class="fa fa fa fa-linkedin"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Regression-ANN-Python</h1>
+
+</div>
+
+
+<pre class="python"><code>import pandas as pd
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as mse
+from sklearn.linear_model import LinearRegression</code></pre>
+<pre class="python"><code>#Import and Examine
+mydata = pd.read_csv(&#39;https://bit.ly/3w8GmGl&#39;)
+print(mydata.head(5))</code></pre>
+<pre><code>##    Id  ... Tow_Bar
+## 0   1  ...       0
+## 1   2  ...       0
+## 2   3  ...       0
+## 3   4  ...       0
+## 4   5  ...       0
+## 
+## [5 rows x 39 columns]</code></pre>
+<pre class="python"><code>print(mydata.dtypes)</code></pre>
+<pre><code>## Id                    int64
+## Model                object
+## Price                 int64
+## Age_08_04             int64
+## Mfg_Month             int64
+## Mfg_Year              int64
+## KM                    int64
+## Fuel_Type            object
+## HP                    int64
+## Met_Color             int64
+## Color                object
+## Automatic             int64
+## CC                    int64
+## Doors                 int64
+## Cylinders             int64
+## Gears                 int64
+## Quarterly_Tax         int64
+## Weight                int64
+## Mfr_Guarantee         int64
+## BOVAG_Guarantee       int64
+## Guarantee_Period      int64
+## ABS                   int64
+## Airbag_1              int64
+## Airbag_2              int64
+## Airco                 int64
+## Automatic_airco       int64
+## Boardcomputer         int64
+## CD_Player             int64
+## Central_Lock          int64
+## Powered_Windows       int64
+## Power_Steering        int64
+## Radio                 int64
+## Mistlamps             int64
+## Sport_Model           int64
+## Backseat_Divider      int64
+## Metallic_Rim          int64
+## Radio_cassette        int64
+## Parking_Assistant     int64
+## Tow_Bar               int64
+## dtype: object</code></pre>
+<pre class="python"><code>#Set categorical columns
+cat_columns=(&#39;Fuel_Type&#39;,&#39;Met_Color&#39;,&#39;Color&#39;,&#39;Automatic&#39;,&#39;Mfr_Guarantee&#39;,&#39;BOVAG_Guarantee&#39;,&#39;ABS&#39;,&#39;Airbag_1&#39;,&#39;Airbag_2&#39;,&#39;Airco&#39;,&#39;Automatic_airco&#39;,&#39;Boardcomputer&#39;,&#39;CD_Player&#39;,&#39;Central_Lock&#39;,&#39;Powered_Windows&#39;,&#39;Power_Steering&#39;,&#39;Radio&#39;,&#39;Mistlamps&#39;,&#39;Sport_Model&#39;,&#39;Backseat_Divider&#39;,&#39;Metallic_Rim&#39;,&#39;Radio_cassette&#39;,&#39;Parking_Assistant&#39;,&#39;Tow_Bar&#39;)
+for col in cat_columns:
+    print(&quot;Columnname=&quot;,col)
+    mydata[col] = mydata[col].astype(&#39;category&#39;)</code></pre>
+<pre><code>## Columnname= Fuel_Type
+## Columnname= Met_Color
+## Columnname= Color
+## Columnname= Automatic
+## Columnname= Mfr_Guarantee
+## Columnname= BOVAG_Guarantee
+## Columnname= ABS
+## Columnname= Airbag_1
+## Columnname= Airbag_2
+## Columnname= Airco
+## Columnname= Automatic_airco
+## Columnname= Boardcomputer
+## Columnname= CD_Player
+## Columnname= Central_Lock
+## Columnname= Powered_Windows
+## Columnname= Power_Steering
+## Columnname= Radio
+## Columnname= Mistlamps
+## Columnname= Sport_Model
+## Columnname= Backseat_Divider
+## Columnname= Metallic_Rim
+## Columnname= Radio_cassette
+## Columnname= Parking_Assistant
+## Columnname= Tow_Bar</code></pre>
+<pre class="python"><code>print(mydata.dtypes)
+#Retain only relevant variables</code></pre>
+<pre><code>## Id                      int64
+## Model                  object
+## Price                   int64
+## Age_08_04               int64
+## Mfg_Month               int64
+## Mfg_Year                int64
+## KM                      int64
+## Fuel_Type            category
+## HP                      int64
+## Met_Color            category
+## Color                category
+## Automatic            category
+## CC                      int64
+## Doors                   int64
+## Cylinders               int64
+## Gears                   int64
+## Quarterly_Tax           int64
+## Weight                  int64
+## Mfr_Guarantee        category
+## BOVAG_Guarantee      category
+## Guarantee_Period        int64
+## ABS                  category
+## Airbag_1             category
+## Airbag_2             category
+## Airco                category
+## Automatic_airco      category
+## Boardcomputer        category
+## CD_Player            category
+## Central_Lock         category
+## Powered_Windows      category
+## Power_Steering       category
+## Radio                category
+## Mistlamps            category
+## Sport_Model          category
+## Backseat_Divider     category
+## Metallic_Rim         category
+## Radio_cassette       category
+## Parking_Assistant    category
+## Tow_Bar              category
+## dtype: object</code></pre>
+<pre class="python"><code>mydata_df = mydata.drop(columns=[&quot;Id&quot;,&quot;Model&quot;,&quot;Mfg_Month&quot;,&quot;Mfg_Year&quot;,&quot;Quarterly_Tax&quot;])
+print(mydata_df.head(5))</code></pre>
+<pre><code>##    Price  Age_08_04     KM  ... Radio_cassette  Parking_Assistant Tow_Bar
+## 0  13500         23  46986  ...              0                  0       0
+## 1  13750         23  72937  ...              0                  0       0
+## 2  13950         24  41711  ...              0                  0       0
+## 3  14950         26  48000  ...              0                  0       0
+## 4  13750         30  38500  ...              0                  0       0
+## 
+## [5 rows x 34 columns]</code></pre>
+<pre class="python"><code>#Dummy coding
+#When columns are not specified, all categorical/obj columns are converted
+df_new =pd.get_dummies(mydata_df,drop_first=True)
+print(df_new)</code></pre>
+<pre><code>##       Price  Age_08_04     KM  ...  Radio_cassette_1  Parking_Assistant_1  Tow_Bar_1
+## 0     13500         23  46986  ...                 0                    0          0
+## 1     13750         23  72937  ...                 0                    0          0
+## 2     13950         24  41711  ...                 0                    0          0
+## 3     14950         26  48000  ...                 0                    0          0
+## 4     13750         30  38500  ...                 0                    0          0
+## ...     ...        ...    ...  ...               ...                  ...        ...
+## 1431   7500         69  20544  ...                 0                    0          0
+## 1432  10845         72  19000  ...                 0                    0          0
+## 1433   8500         71  17016  ...                 0                    0          0
+## 1434   7250         70  16916  ...                 0                    0          0
+## 1435   6950         76      1  ...                 0                    0          0
+## 
+## [1436 rows x 43 columns]</code></pre>
+<pre class="python"><code>print(df_new.dtypes)</code></pre>
+<pre><code>## Price                  int64
+## Age_08_04              int64
+## KM                     int64
+## HP                     int64
+## CC                     int64
+## Doors                  int64
+## Cylinders              int64
+## Gears                  int64
+## Weight                 int64
+## Guarantee_Period       int64
+## Fuel_Type_Diesel       uint8
+## Fuel_Type_Petrol       uint8
+## Met_Color_1            uint8
+## Color_Black            uint8
+## Color_Blue             uint8
+## Color_Green            uint8
+## Color_Grey             uint8
+## Color_Red              uint8
+## Color_Silver           uint8
+## Color_Violet           uint8
+## Color_White            uint8
+## Color_Yellow           uint8
+## Automatic_1            uint8
+## Mfr_Guarantee_1        uint8
+## BOVAG_Guarantee_1      uint8
+## ABS_1                  uint8
+## Airbag_1_1             uint8
+## Airbag_2_1             uint8
+## Airco_1                uint8
+## Automatic_airco_1      uint8
+## Boardcomputer_1        uint8
+## CD_Player_1            uint8
+## Central_Lock_1         uint8
+## Powered_Windows_1      uint8
+## Power_Steering_1       uint8
+## Radio_1                uint8
+## Mistlamps_1            uint8
+## Sport_Model_1          uint8
+## Backseat_Divider_1     uint8
+## Metallic_Rim_1         uint8
+## Radio_cassette_1       uint8
+## Parking_Assistant_1    uint8
+## Tow_Bar_1              uint8
+## dtype: object</code></pre>
+<pre class="python"><code>#normalise
+min_max_scaler = MinMaxScaler()
+df_new[[&quot;Price&quot;, &quot;Age_08_04&quot;,&quot;KM&quot;,&quot;HP&quot;,&quot;Doors&quot;,&quot;Cylinders&quot;,&quot;Gears&quot;,&quot;Weight&quot;,&quot;Guarantee_Period&quot;]] = min_max_scaler.fit_transform(df_new[[&quot;Price&quot;, &quot;Age_08_04&quot;,&quot;KM&quot;,&quot;HP&quot;,&quot;Doors&quot;,&quot;Cylinders&quot;,&quot;Gears&quot;,&quot;Weight&quot;,&quot;Guarantee_Period&quot;]])
+df_new</code></pre>
+<pre><code>##          Price  Age_08_04  ...  Parking_Assistant_1  Tow_Bar_1
+## 0     0.325044   0.278481  ...                    0          0
+## 1     0.333925   0.278481  ...                    0          0
+## 2     0.341030   0.291139  ...                    0          0
+## 3     0.376554   0.316456  ...                    0          0
+## 4     0.333925   0.367089  ...                    0          0
+## ...        ...        ...  ...                  ...        ...
+## 1431  0.111901   0.860759  ...                    0          0
+## 1432  0.230728   0.898734  ...                    0          0
+## 1433  0.147425   0.886076  ...                    0          0
+## 1434  0.103020   0.873418  ...                    0          0
+## 1435  0.092362   0.949367  ...                    0          0
+## 
+## [1436 rows x 43 columns]</code></pre>
+<pre class="python"><code>print(df_new.head(5))</code></pre>
+<pre><code>##       Price  Age_08_04  ...  Parking_Assistant_1  Tow_Bar_1
+## 0  0.325044   0.278481  ...                    0          0
+## 1  0.333925   0.278481  ...                    0          0
+## 2  0.341030   0.291139  ...                    0          0
+## 3  0.376554   0.316456  ...                    0          0
+## 4  0.333925   0.367089  ...                    0          0
+## 
+## [5 rows x 43 columns]</code></pre>
+<pre class="python"><code>#Test Train Split
+Y=df_new.Price
+X=df_new.drop(columns=&#39;Price&#39;)
+X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=0.3,random_state=1)</code></pre>
+<pre class="python"><code>#One Hidden layer with 20 nodes
+mymodel = MLPRegressor(hidden_layer_sizes=(20),random_state=1, max_iter=1000,solver=&quot;lbfgs&quot;)
+mymodel.fit(X_train, y_train)</code></pre>
+<pre><code>## MLPRegressor(hidden_layer_sizes=20, max_iter=1000, random_state=1,
+##              solver=&#39;lbfgs&#39;)</code></pre>
+<pre class="python"><code>print(mymodel)</code></pre>
+<pre><code>## MLPRegressor(hidden_layer_sizes=20, max_iter=1000, random_state=1,
+##              solver=&#39;lbfgs&#39;)</code></pre>
+<pre class="python"><code>expected_y  = y_test
+predicted_y = mymodel.predict(X_test)</code></pre>
+<pre class="python"><code>#Training Error
+predictions_train_LR=mymodel.predict(X_train)
+train_error_LR=mse(y_train,predictions_train_LR)
+print(&#39;Training Error:&#39;,train_error_LR)
+
+#Test Error</code></pre>
+<pre><code>## Training Error: 0.0038196227777789666</code></pre>
+<pre class="python"><code>test_error_LR=mse(y_test,predicted_y)
+print(&#39;Test Error:&#39;,test_error_LR)#evaluate the R^2score_</code></pre>
+<pre><code>## Test Error: 0.00883768532286102</code></pre>
+<pre class="python"><code>score_LR=mymodel.score(X_train,y_train) #returns the R^2 score
+print(&#39;R^2 returned by the  mymodel:&#39;,score_LR)</code></pre>
+<pre><code>## R^2 returned by the  mymodel: 0.7732527427135178</code></pre>
+
+<div id="footer">
+<p>Copyright &copy; 2021,  Angeline Fernando,  All rights reserved.</p>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

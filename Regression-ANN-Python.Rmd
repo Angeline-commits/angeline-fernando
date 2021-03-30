@@ -1,0 +1,86 @@
+---
+title: "Regression-ANN-Python"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:/Users/User/anaconda3/python')
+```
+```{python}
+import pandas as pd
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as mse
+from sklearn.linear_model import LinearRegression
+```
+```{python}
+#Import and Examine
+mydata = pd.read_csv('https://bit.ly/3w8GmGl')
+print(mydata.head(5))
+print(mydata.dtypes)
+```
+```{python}
+#Set categorical columns
+cat_columns=('Fuel_Type','Met_Color','Color','Automatic','Mfr_Guarantee','BOVAG_Guarantee','ABS','Airbag_1','Airbag_2','Airco','Automatic_airco','Boardcomputer','CD_Player','Central_Lock','Powered_Windows','Power_Steering','Radio','Mistlamps','Sport_Model','Backseat_Divider','Metallic_Rim','Radio_cassette','Parking_Assistant','Tow_Bar')
+for col in cat_columns:
+    print("Columnname=",col)
+    mydata[col] = mydata[col].astype('category')
+```
+```{python}
+print(mydata.dtypes)
+#Retain only relevant variables
+mydata_df = mydata.drop(columns=["Id","Model","Mfg_Month","Mfg_Year","Quarterly_Tax"])
+print(mydata_df.head(5))
+```
+```{python}
+#Dummy coding
+#When columns are not specified, all categorical/obj columns are converted
+df_new =pd.get_dummies(mydata_df,drop_first=True)
+print(df_new)
+print(df_new.dtypes)
+```
+```{python}
+#normalise
+min_max_scaler = MinMaxScaler()
+df_new[["Price", "Age_08_04","KM","HP","Doors","Cylinders","Gears","Weight","Guarantee_Period"]] = min_max_scaler.fit_transform(df_new[["Price", "Age_08_04","KM","HP","Doors","Cylinders","Gears","Weight","Guarantee_Period"]])
+df_new
+print(df_new.head(5))
+
+```
+```{python}
+#Test Train Split
+Y=df_new.Price
+X=df_new.drop(columns='Price')
+X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=0.3,random_state=1)
+```
+
+```{python output=TRUE}
+#One Hidden layer with 20 nodes
+mymodel = MLPRegressor(hidden_layer_sizes=(20),random_state=1, max_iter=1000,solver="lbfgs")
+mymodel.fit(X_train, y_train)
+print(mymodel)
+expected_y  = y_test
+predicted_y = mymodel.predict(X_test)
+```
+```{python}
+#Training Error
+predictions_train_LR=mymodel.predict(X_train)
+train_error_LR=mse(y_train,predictions_train_LR)
+print('Training Error:',train_error_LR)
+
+#Test Error
+test_error_LR=mse(y_test,predicted_y)
+print('Test Error:',test_error_LR)#evaluate the R^2score_
+score_LR=mymodel.score(X_train,y_train) #returns the R^2 score
+print('R^2 returned by the  mymodel:',score_LR)
+```
+
+
+
+
+
+
+
+
