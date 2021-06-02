@@ -7,10 +7,7 @@ navbar:
       href: research.html
     - text: "Teaching"
       href: teaching.html
-    - text: "PGDM-2021"
-      href: BA-PGDM-2021.html
-    - text: "PGPM-Flex-2021"
-      href: BA-PGPM-Flex-2021.html
+
   right:
     - icon: fa-envelope fa-lg
       href: contact.html

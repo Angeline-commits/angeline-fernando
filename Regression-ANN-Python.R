@@ -1,0 +1,113 @@
+---
+  title: "Shopping-Kmeans-Python"
+output: html_document
+---
+  
+  ```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:/Users/User/anaconda3/python')
+matplotlib <- import("matplotlib")
+matplotlib$use("Agg", force = TRUE)
+
+```
+```{python}
+import matplotlib.pyplot as plt
+from sklearn import preprocessing
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+import pandas as pd
+from yellowbrick.cluster import KElbowVisualizer
+from yellowbrick.cluster import SilhouetteVisualizer
+```
+
+```{python}
+shopping_original=pd.read_csv('./data/Shopping_Data.csv')
+# Examine data
+shopping_original.head()
+
+shopping_original
+shopping_df = shopping_original.drop(columns="CaseNo")
+shopping_df
+scaler = preprocessing.StandardScaler().fit(shopping_df)
+scaler
+#Z-transform
+
+
+shopping_df_scaled = pd.DataFrame(scaler.fit_transform(shopping_df), columns=shopping_df.columns, index=shopping_df.index)
+shopping_df_scaled
+
+```
+
+```{python}
+#Elbow with default libs
+cluster_range = range(1, 10)
+cluster_errors = []
+for num_clusters in cluster_range:
+  clusters=KMeans(num_clusters)
+clusters.fit(shopping_df_scaled)
+cluster_errors.append(clusters.inertia_)
+
+plt.figure(figsize=(6,4))
+plt.plot(cluster_range,cluster_errors,marker="o")
+plt.show()
+```
+```{python}
+#https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html
+#Silhouette scores from library
+
+
+range_n_clusters = range(2, 10)
+
+for n_clusters in range_n_clusters:
+  
+  # Initialize the clusterer with n_clusters value and a random generator
+  # seed of 10 for reproducibility.
+  clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+cluster_labels = clusterer.fit_predict(shopping_df_scaled)
+# The silhouette_score gives the average value for all the samples.
+# This gives a perspective into the density and separation of the formed
+# clusters
+silhouette_avg = silhouette_score(shopping_df_scaled, cluster_labels)
+#Choose the one with the highest sil score
+print("For n_clusters =", n_clusters,
+      "The average silhouette_score is :", silhouette_avg)
+```
+
+```{python}
+#Elbow with YellowBrick
+#https://www.scikit-yb.org/en/latest/api/cluster/elbow.html
+model = KMeans(random_state=10) # seed 
+visualizer = KElbowVisualizer(model, k=(1,9))
+
+visualizer.fit(shopping_df_scaled)        # Fit the data to the visualizer
+visualizer.show()        # Finalize and render the figure
+#Future warnng due tO Yellowbrick and sckit versions
+#Sil with Yellow Brick
+model = KMeans(random_state=10) # seed 
+visualizer = SilhouetteVisualizer(model,colors='yellowbrick')
+visualizer.fit(shopping_df_scaled)        # Fit the data to the visualizer
+visualizer.show()  
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+
+k=3
+model=KMeans(n_clusters=k,random_state=10).fit(shopping_df_scaled)
+print(model)
+print(model.labels_)
+centroids=model.cluster_centers_
+#Profile the clusters# based on the centroids
+# Cluster 1 loads on V1 and V3
+# Cluster 2 loads on V5
+# Cluster 3 loads on V2,V4 and V6
+print(centroids)
+shopping_df_scaled["clusterid"]=model.labels_
+
+#Members in the cluster
+#First Cluster
+shopping_df_scaled[shopping_df_scaled.clusterid==0]
+#2nd
+shopping_df_scaled[shopping_df_scaled.clusterid==1]
+#3rd
+shopping_df_scaled[shopping_df_scaled.clusterid==2]
+```
+
