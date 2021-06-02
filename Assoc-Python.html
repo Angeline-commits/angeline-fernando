@@ -291,12 +291,6 @@ $(document).ready(function () {
 <li>
   <a href="teaching.html">Teaching</a>
 </li>
-<li>
-  <a href="BA-PGDM-2021.html">PGDM-2021</a>
-</li>
-<li>
-  <a href="BA-PGPM-Flex-2021.html">PGPM-Flex-2021</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -307,13 +301,13 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="https://scholar.google.com/citations?user=BprGSCkAAAAJ&amp;hl=en">
-    <span class="fas fa-google"></span>
+    <span class="fa fa fa fa-google"></span>
      
   </a>
 </li>
 <li>
   <a href="https://www.linkedin.com/in/angelinegautami/">
-    <span class="fas fa-linkedin fa-lg"></span>
+    <span class="fa fa fa fa-linkedin"></span>
      
   </a>
 </li>
@@ -349,31 +343,31 @@ apriori(subset_basket, min_support=0.6)</code></pre>
 <pre class="python"><code>frequent_itemsets = apriori(subset_basket, min_support=0.01, use_colnames=True)
 frequent_itemsets</code></pre>
 <pre><code>support                 itemsets</code></pre>
-<p>0 0.75 (Bread) 1 0.75 (Cheese ) 2 0.50 (Juice) 3 0.50 (Milk) 4 0.50 (Cheese , Bread) 5 0.25 (Juice, Bread) 6 0.25 (Milk, Bread) 7 0.50 (Cheese , Juice) 8 0.25 (Cheese , Milk) 9 0.25 (Juice, Milk) 10 0.25 (Cheese , Juice, Bread) 11 0.25 (Cheese , Juice, Milk)</p>
+<p>0 0.75 (Bread) 1 0.75 (Cheese ) 2 0.50 (Juice) 3 0.50 (Milk) 4 0.50 (Bread, Cheese ) 5 0.25 (Juice, Bread) 6 0.25 (Milk, Bread) 7 0.50 (Juice, Cheese ) 8 0.25 (Milk, Cheese ) 9 0.25 (Milk, Juice) 10 0.25 (Juice, Bread, Cheese ) 11 0.25 (Milk, Juice, Cheese )</p>
 <pre class="python"><code>frequent_itemsets = apriori(subset_basket, min_support=0.01, use_colnames=True)
 frequent_itemsets</code></pre>
 <pre><code>support                 itemsets</code></pre>
-<p>0 0.75 (Bread) 1 0.75 (Cheese ) 2 0.50 (Juice) 3 0.50 (Milk) 4 0.50 (Cheese , Bread) 5 0.25 (Juice, Bread) 6 0.25 (Milk, Bread) 7 0.50 (Cheese , Juice) 8 0.25 (Cheese , Milk) 9 0.25 (Juice, Milk) 10 0.25 (Cheese , Juice, Bread) 11 0.25 (Cheese , Juice, Milk)</p>
+<p>0 0.75 (Bread) 1 0.75 (Cheese ) 2 0.50 (Juice) 3 0.50 (Milk) 4 0.50 (Bread, Cheese ) 5 0.25 (Juice, Bread) 6 0.25 (Milk, Bread) 7 0.50 (Juice, Cheese ) 8 0.25 (Milk, Cheese ) 9 0.25 (Milk, Juice) 10 0.25 (Juice, Bread, Cheese ) 11 0.25 (Milk, Juice, Cheese )</p>
 <pre class="python"><code>frequent_itemsets[&#39;length&#39;] = frequent_itemsets[&#39;itemsets&#39;].apply(lambda x: len(x))
 frequent_itemsets</code></pre>
 <pre><code>support                 itemsets  length</code></pre>
-<p>0 0.75 (Bread) 1 1 0.75 (Cheese ) 1 2 0.50 (Juice) 1 3 0.50 (Milk) 1 4 0.50 (Cheese , Bread) 2 5 0.25 (Juice, Bread) 2 6 0.25 (Milk, Bread) 2 7 0.50 (Cheese , Juice) 2 8 0.25 (Cheese , Milk) 2 9 0.25 (Juice, Milk) 2 10 0.25 (Cheese , Juice, Bread) 3 11 0.25 (Cheese , Juice, Milk) 3</p>
+<p>0 0.75 (Bread) 1 1 0.75 (Cheese ) 1 2 0.50 (Juice) 1 3 0.50 (Milk) 1 4 0.50 (Bread, Cheese ) 2 5 0.25 (Juice, Bread) 2 6 0.25 (Milk, Bread) 2 7 0.50 (Juice, Cheese ) 2 8 0.25 (Milk, Cheese ) 2 9 0.25 (Milk, Juice) 2 10 0.25 (Juice, Bread, Cheese ) 3 11 0.25 (Milk, Juice, Cheese ) 3</p>
 <pre class="python"><code>frequent_itemsets[ (frequent_itemsets[&#39;length&#39;] == 2) &amp;
                    (frequent_itemsets[&#39;support&#39;] &gt;= 0.01) ]
 </code></pre>
-<p>support itemsets length 4 0.50 (Cheese , Bread) 2 5 0.25 (Juice, Bread) 2 6 0.25 (Milk, Bread) 2 7 0.50 (Cheese , Juice) 2 8 0.25 (Cheese , Milk) 2 9 0.25 (Juice, Milk) 2</p>
+<p>support itemsets length 4 0.50 (Bread, Cheese ) 2 5 0.25 (Juice, Bread) 2 6 0.25 (Milk, Bread) 2 7 0.50 (Juice, Cheese ) 2 8 0.25 (Milk, Cheese ) 2 9 0.25 (Milk, Juice) 2</p>
 <pre class="python"><code>#http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
 rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.1)
 rules</code></pre>
 <pre><code>##        antecedents      consequents  ...  leverage  conviction
-## 0        (Cheese )          (Juice)  ...    0.1250       1.500
-## 1          (Juice)        (Cheese )  ...    0.1250         inf
+## 0          (Juice)        (Cheese )  ...    0.1250         inf
+## 1        (Cheese )          (Juice)  ...    0.1250       1.500
 ## 2   (Juice, Bread)        (Cheese )  ...    0.0625         inf
 ## 3        (Cheese )   (Juice, Bread)  ...    0.0625       1.125
-## 4  (Cheese , Milk)          (Juice)  ...    0.1250         inf
-## 5    (Juice, Milk)        (Cheese )  ...    0.0625         inf
-## 6        (Cheese )    (Juice, Milk)  ...    0.0625       1.125
-## 7          (Juice)  (Cheese , Milk)  ...    0.1250       1.500
+## 4    (Milk, Juice)        (Cheese )  ...    0.0625         inf
+## 5  (Milk, Cheese )          (Juice)  ...    0.1250         inf
+## 6          (Juice)  (Milk, Cheese )  ...    0.1250       1.500
+## 7        (Cheese )    (Milk, Juice)  ...    0.0625       1.125
 ## 
 ## [8 rows x 9 columns]</code></pre>
 <pre class="python"><code>rules[&quot;antecedent_len&quot;] = rules[&quot;antecedents&quot;].apply(lambda x: len(x))
@@ -381,14 +375,14 @@ rules
 
 #Single antecdent</code></pre>
 <pre><code>##        antecedents      consequents  ...  conviction  antecedent_len
-## 0        (Cheese )          (Juice)  ...       1.500               1
-## 1          (Juice)        (Cheese )  ...         inf               1
+## 0          (Juice)        (Cheese )  ...         inf               1
+## 1        (Cheese )          (Juice)  ...       1.500               1
 ## 2   (Juice, Bread)        (Cheese )  ...         inf               2
 ## 3        (Cheese )   (Juice, Bread)  ...       1.125               1
-## 4  (Cheese , Milk)          (Juice)  ...         inf               2
-## 5    (Juice, Milk)        (Cheese )  ...         inf               2
-## 6        (Cheese )    (Juice, Milk)  ...       1.125               1
-## 7          (Juice)  (Cheese , Milk)  ...       1.500               1
+## 4    (Milk, Juice)        (Cheese )  ...         inf               2
+## 5  (Milk, Cheese )          (Juice)  ...         inf               2
+## 6          (Juice)  (Milk, Cheese )  ...       1.500               1
+## 7        (Cheese )    (Milk, Juice)  ...       1.125               1
 ## 
 ## [8 rows x 10 columns]</code></pre>
 <pre class="python"><code>allrules=rules[ (rules[&#39;antecedent_len&#39;] == 1) &amp;
@@ -396,8 +390,8 @@ rules
        (rules[&#39;lift&#39;] &gt; 1.1) ]
 print(allrules)</code></pre>
 <pre><code>##   antecedents consequents  ...  conviction  antecedent_len
-## 0   (Cheese )     (Juice)  ...         1.5               1
-## 1     (Juice)   (Cheese )  ...         inf               1
+## 0     (Juice)   (Cheese )  ...         inf               1
+## 1   (Cheese )     (Juice)  ...         1.5               1
 ## 
 ## [2 rows x 10 columns]</code></pre>
 
