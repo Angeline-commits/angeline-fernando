@@ -23,7 +23,7 @@
 
 <ul>
 <li>
-<p><strong>Download Datsets</strong> <a href="https://bit.ly/3f3jDDC" download>BA Datasets</a> </p>
+<p><strong>Download Datsets</strong> <a href="https://tinyurl.com/9zv368p7" download>BA Datasets</a> </p>
 </li>
 </ul>
 
