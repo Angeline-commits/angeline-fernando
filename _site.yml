@@ -7,6 +7,8 @@ navbar:
       href: research.html
     - text: "Teaching"
       href: teaching.html
+    - text: "BA-PGPM2021"
+      href: BA-PGPM-2021.html
 
 
   right:

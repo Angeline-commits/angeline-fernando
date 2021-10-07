@@ -2,6 +2,13 @@
 <h2>Business Analytics</h2>
 <p>&nbsp;</p>
 
+
+<ul>
+<li>
+<p><strong>Data Quality</strong>  <a href="Data Quality Report.htm" target="_blank" rel="noopener">Data Quality Report</a> </p>
+</li>
+</ul>
+
 <ul>
 <li>
 <p><strong>EDA with libraries</strong> <a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and  <a href="EDA-python.html" target="_blank" rel="noopener">Python code</a> </p>
