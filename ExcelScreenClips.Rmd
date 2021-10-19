@@ -1,0 +1,23 @@
+<h2>Excel Screen Tips</h2>
+<p>&nbsp;</p>
+
+<h3><p><strong> Cluster </p><h3>
+<ul>
+<li>
+<p><strong>Distance Matrix</strong> <a href="https://youtu.be/VdnpeIkhZCw">Distance Matrix</a> </p>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Simple 2-D Plot</strong> <a href="https://youtu.be/IcE9s29aEuA">Simple 2-D Plot</a> </p>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Loading Into Tanagara</strong> <a href="https://youtu.be/P_8Y_00i288">Loading Into Tanagara</a> </p>
+</li>
+</ul>
+
+

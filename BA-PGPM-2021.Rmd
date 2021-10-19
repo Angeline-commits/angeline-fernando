@@ -27,6 +27,12 @@
 </li>
 </ul>
 
+<ul>
+<li>
+<p><strong>Excel Screen Clips</strong> <a href="ExcelScreenClips.html">Excel Screen Clips</a> </p>
+</li>
+</ul>
+
 
 
  
