@@ -1,0 +1,70 @@
+---
+title: "Wholesale"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ 
+
+```{r mystuff}
+library(readxl)
+library(factoextra)
+library("cluster")
+wholesale.df <- read_excel("Wholesale customers data.xlsx")
+
+df<-as.data.frame(scale(wholesale.df[,3:8]))
+###  K-means results
+
+fviz_nbclust(df, kmeans, method = "wss") 
+fviz_nbclust(df, kmeans, method = "silhouette") 
+kmeans.res <- factoextra::eclust(df,FUNcluster="kmeans", k=3,hc_metric = "euclidean")
+kmeans.res$
+km.sil<-silhouette(kmeans.res$cluster, dist(df))
+fviz_silhouette(km.sil)
+
+
+
+###  PAM results     
+fviz_nbclust(df, pam, method = "wss") 
+fviz_nbclust(df, pam, method = "silhouette") 
+pam.res <- pam(df, 2,  metric = "euclidean", stand = FALSE)
+fviz_cluster(pam.res, data = data, palette = c("#FC4E07", "#00AFBB", "#E7B800"), ellipse.type = "euclid", 
+             star.plot = TRUE, 
+             repel = TRUE, 
+             ggtheme = theme_minimal() )
+fviz_silhouette(pam.res, palette = "jco", ggtheme = theme_classic())
+#Medoids
+#2 cluster solution
+pam.res$medoids
+
+pam.res <- pam(df, 3,  metric = "euclidean", stand = FALSE)
+fviz_cluster(pam.res, data = data, palette = c("#FC4E07", "#00AFBB", "#E7B800"), ellipse.type = "euclid", 
+             star.plot = TRUE, 
+             repel = TRUE, 
+             ggtheme = theme_minimal() )
+fviz_silhouette(pam.res, palette = "jco", ggtheme = theme_classic())
+#3 cluster solution
+pam.res$medoids
+
+
+##### DB Scan
+
+library(fpc)
+
+res.Dbscan <- dbscan(df, eps = 0.45, MinPts = 5)
+res.Dbscan
+# Checking cluster
+res.Dbscan$cluster
+
+# Plotting Cluster
+
+
+fviz_cluster(res.Dbscan, df, geom = "point")
+
+print(res.Dbscan)
+ 
+```
+
