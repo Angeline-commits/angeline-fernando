@@ -54,6 +54,11 @@
 </ul>
 
 <ul>
+
+<li>
+<p><strong>Logistic Regression </strong><a href="Logit-Diag.htm" target="_blank" rel="noopener">Interpretation</a> </p>
+</li>
+
 <li>
 <p><strong>Logistic Regression </strong><a href="logistic.html" target="_blank" rel="noopener">R code </a> , <a href="Logistic-Python.html" target="_blank" rel="noopener">Python code</a> and  <a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Sample Interpretation</a> </p>
 </li>
