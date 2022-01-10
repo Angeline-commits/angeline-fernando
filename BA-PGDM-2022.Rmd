@@ -1,0 +1,35 @@
+<h2>Business Analytics-PGDM-2022</h2>
+<p>&nbsp;</p>
+
+<ul>
+<li>
+<p><strong>Excel Add Ins</strong> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/en/tanagra.html" target="_blank" rel="noopener">Tanagra</a> ,  <a href="https://regressit.com/regressitlogistic.html" target="_blank" rel="noopener">RegressItLogistic</a>  </p>
+</li>
+</ul>
+
+
+<ul>
+<li>
+<p><strong>Setting Up the Excel-Add Ins</strong> <a href="Excel Add-ins.htm">Setting up the Excel Add Ins</a> </p>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Installing RapidMiner Studio</strong> <a href="https://docs.rapidminer.com/9.9/studio/installation/" target="_blank" rel="noopener">Installing RapidMiner Studio</a> </p>
+</li>
+</ul>
+
+
+<ul>
+<li>
+<p><strong>Download Datsets</strong> <a href="https://tinyurl.com/9zv368p7" download>BA Datasets</a> </p>
+</li>
+</ul>
+
+
+
+
+
+ 
+
