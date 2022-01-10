@@ -23,15 +23,10 @@
 
 <ul>
 <li>
-<p><strong>Download Datsets</strong> <a href="https://tinyurl.com/9zv368p7" download>BA Datasets</a> </p>
+<p><strong>Download Datsets</strong> <a href="https://tinyurl.com/4rtpm83v" download>BA Datasets</a> </p>
 </li>
 </ul>
 
-<ul>
-<li>
-<p><strong>Excel Screen Clips</strong> <a href="ExcelScreenClips.html">Excel Screen Clips</a> </p>
-</li>
-</ul>
 
 
 
