@@ -1,0 +1,94 @@
+---
+title: "Wine-Kmeans-Python"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+library(reticulate)
+use_python("E:/Users/User/anaconda3/python.exe")
+matplotlib <- import("matplotlib")
+matplotlib$use("Agg", force = TRUE)
+```
+```{python}
+import matplotlib.pyplot as plt
+from sklearn import preprocessing
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+import pandas as pd
+
+```
+
+```{python}
+wine_original=pd.read_csv('./data/wines.csv')
+# Examine data
+wine_original.head()
+
+wine_original
+wine_df = wine_original.drop(columns="Region")
+wine_df
+scaler = preprocessing.StandardScaler().fit(wine_df)
+scaler
+#Z-transform
+
+
+wine_df_scaled = pd.DataFrame(scaler.fit_transform(wine_df), columns=wine_df.columns, index=wine_df.index)
+wine_df_scaled
+
+```
+
+```{python}
+#Elbow with default libs
+cluster_range = range(1, 10)
+cluster_errors = []
+for num_clusters in cluster_range:
+    clusters=KMeans(num_clusters)
+    clusters.fit(wine_df_scaled)
+    cluster_errors.append(clusters.inertia_)
+    
+plt.figure(figsize=(6,4))
+plt.plot(cluster_range,cluster_errors,marker="o")
+plt.show()
+```
+```{python}
+#https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html
+#Silhouette scores from library
+
+
+range_n_clusters = range(2, 10)
+
+for n_clusters in range_n_clusters:
+
+# Initialize the clusterer with n_clusters value and a random generator
+    # seed of 10 for reproducibility.
+    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+    cluster_labels = clusterer.fit_predict(wine_df_scaled)
+# The silhouette_score gives the average value for all the samples.
+    # This gives a perspective into the density and separation of the formed
+    # clusters
+    silhouette_avg = silhouette_score(wine_df_scaled, cluster_labels)
+    #Choose the one with the highest sil score
+    print("For n_clusters =", n_clusters,
+          "The average silhouette_score is :", silhouette_avg)
+          
+```
+```{python}
+k=3
+model=KMeans(n_clusters=k,random_state=10).fit(wine_df_scaled)
+print(model)
+print(model.labels_)
+centroids=model.cluster_centers_
+#Display the three clusters
+print(centroids)
+
+wine_df_scaled["clusterid"]=model.labels_
+#Members in the cluster
+#First Cluster
+wine_df_scaled[wine_df_scaled.clusterid==0]
+#2nd
+wine_df_scaled[wine_df_scaled.clusterid==1]
+#3rd
+wine_df_scaled[wine_df_scaled.clusterid==2]
+```
+
+
+

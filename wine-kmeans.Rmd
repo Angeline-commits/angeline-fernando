@@ -1,0 +1,113 @@
+---
+title: "Wine"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(png) 
+```
+
+```{r mystuff}
+#'Reset environment before starting
+set.seed(NULL)
+rm(list = ls(all.names = TRUE))
+#factoextra : to determine the optimal number clusters data visualization.
+#fpc: cluster validation with silhouette width
+library(factoextra)
+library(fpc)
+#'Load the data
+# Read the contents of the csv file into a variable called wine_original
+# "header=TRUE" implies that header is present in the data file
+
+wine_original <- read.csv("./data/wines.csv", header = TRUE)
+#'Examine the dataset
+
+#str shows the structure of the object :variable type
+str(wine_original)
+#summary produces descriptive stats for the variables in the data
+summary(wine_original)
+#'Preprocessing
+#We do not want to cluster region in the last  column
+#Remove this and create a new dataframe to work with
+
+wine.df<- wine_original[ , -c(14)]  # Drop region columns.
+#Z-transform
+wine.scaled.df<-as.data.frame(scale(wine.df))
+
+#'Set the seed 
+#Refer : http://rfunction.com/archives/62 K-means algorithm uses random number
+#simulations to generate solutions.
+# When we use any algorithm that uses random #number to simulate 
+# we have to set the seed in r environment to get reproducible results
+set.seed(96743)
+
+#'Number of clusters
+#To identify number of clusters apriori
+# Use wss and silhouette metrics
+
+
+#Plots Total within-clusters sum of squares vs. Number of clusters
+fviz_nbclust(wine.scaled.df, kmeans, method = "wss")
+
+#'The plot shows the elbow bend at **3 **
+#Beyond this bend there is no value obtained in terms of wss
+#Plots silhouette
+
+fviz_nbclust(wine.scaled.df, kmeans, method = "silhouette")
+
+#'The plot shows the peak at **3 ** again
+#'Run k-means with 3 clusters
+wine.seg <- kmeans(wine.scaled.df,centers = 3)
+wine.seg
+
+#'The results show the following
+# 1. The number of clusters and the number of rows in each cluster
+# 2. The means of the variables in each cluster
+# 3. Clustering vector: A vector of integers that shows the cluster each observation belongs to
+
+# Cluster size
+wine.seg$size
+
+# Cluster means
+wine.seg$centers
+
+#'Visualise the clusters
+
+fviz_cluster(wine.seg, data = wine.scaled.df)
+
+#'Tabulate the clusters and Profile
+```{r, fig.width = 2}
+# Small fig.width
+#This is an excel screenshot to see the clusters clearly
+img1_path <- "wine.png"
+knitr::include_graphics(img1_path)
+
+```
+
+```{r mystuff2}
+
+
+#Each row represents a cluster
+#Get the max value loaded into each cluster
+# Row 1 - Color intensity-Malic acid
+# Row 2 - High in Proline/ Flavnoids-Low in ash akanity and non-flavnoid
+# Row 3 - CDilute
+
+
+mycluster_profile<-data.frame(
+  cbind(wine_original,"cluster_number"=wine.seg$cluster))
+# Add the names we gave for the clusters
+
+mycluster_profile$cluster_name[mycluster_profile$cluster_number==1] <- "Color intensity-Malic acid"
+mycluster_profile$cluster_name[mycluster_profile$cluster_number==2] <- "Proline"
+mycluster_profile$cluster_name[mycluster_profile$cluster_number==3] <- "Dilute"
+
+#Write the file to excel for further analysis
+write.csv(mycluster_profile,file = "cluster_profiles.csv")
+
+
+
+ 
+```
+

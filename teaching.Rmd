@@ -43,6 +43,12 @@
 
 <ul>
 <li>
+<p><strong>Cluster Analysis : </strong> Cluster Analysis-Example2-Wine <a href="wine-kmeans.html" target="_blank" rel="noopener">R code </a> and  <a href="wine-kmeans-python.html" target="_blank" rel="noopener">Python code</a> </p>
+</li>
+</ul>
+
+<ul>
+<li>
 <p><strong>Cluster Analysis : </strong> Cluster Analysis-PAM <a href="whole-sale-medoids-file.html" target="_blank" rel="noopener">R code </a>  </p>
 </li>
 </ul>
