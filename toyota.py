@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error as mse
 
 #Import and Examine
-mydata = pd.read_csv('https://raw.githubusercontent.com/Angeline-commits/angeline-fernando/master/ToyotaCorolla-pgdm.csv')
+mydata = pd.read_csv('https://bit.ly/3ME6Bga')
 print(mydata.head(5))
 
 print(mydata.dtypes)
