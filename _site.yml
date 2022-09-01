@@ -7,9 +7,6 @@ navbar:
       href: research.html
     - text: "Teaching"
       href: teaching.html
-    # - text: "BA-PGDM2022"
-    #   href: BA-PGDM-2022.html
-
 
   right:
     - icon: fa-envelope fa-lg
