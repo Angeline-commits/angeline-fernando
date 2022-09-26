@@ -13,8 +13,8 @@
 
 <title>teaching.knit</title>
 
-<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -59,6 +59,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -83,6 +84,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -140,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -235,7 +243,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -295,101 +303,135 @@ Business Analytics
 <ul>
 <li>
 <p>
-<strong>Data Quality</strong> <a href="Data Quality Report.htm" target="_blank" rel="noopener">Data Quality Report</a>
+<strong>Data Quality</strong>
+<a href="Data Quality Report.htm" target="_blank" rel="noopener">Data
+Quality Report</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>EDA with libraries</strong> <a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and <a href="EDA-python.html" target="_blank" rel="noopener">Python code</a>
+<strong>EDA with libraries</strong>
+<a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and
+<a href="EDA-python.html" target="_blank" rel="noopener">Python code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Descriptive Analytics-Simple Summary </strong> <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Descriptive Analytics-Simple Summary </strong>
+<a href="descriptive-r.html" target="_blank" rel="noopener">R code </a>
+and
+<a href="descriptive-python.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Descriptive Analytics-Univariate </strong><a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and <a href="univariate-python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Descriptive Analytics-Univariate
+</strong><a href="univariate-r.html" target="_blank" rel="noopener">R
+code </a> and
+<a href="univariate-python.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Descriptive Analytics-Bivariate </strong><a href="bivariate-r.html" target="_blank" rel="noopener">R code </a> and <a>Python code</a>
+<strong>Descriptive Analytics-Bivariate
+</strong><a href="bivariate-r.html" target="_blank" rel="noopener">R
+code </a> and <a>Python code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-Types and Applications <a href="shopping-kmeans.html" target="_blank" rel="noopener">R code </a> and <a href="shopping-kmeans-python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Cluster Analysis : </strong> Cluster Analysis-Types and
+Applications
+<a href="shopping-kmeans.html" target="_blank" rel="noopener">R code
+</a> and
+<a href="shopping-kmeans-python.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-Example2-Wine <a href="wine-kmeans.html" target="_blank" rel="noopener">R code </a> and <a href="wine-kmeans-python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Cluster Analysis : </strong> Cluster Analysis-Example2-Wine
+<a href="wine-kmeans.html" target="_blank" rel="noopener">R code </a>
+and
+<a href="wine-kmeans-python.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-PAM <a href="whole-sale-medoids-file.html" target="_blank" rel="noopener">R code </a>
+<strong>Cluster Analysis : </strong> Cluster Analysis-PAM
+<a href="whole-sale-medoids-file.html" target="_blank" rel="noopener">R
+code </a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Association Rule Mining : </strong> Association Rules <a href="Assoc-R.html" target="_blank" rel="noopener">R code </a> and <a href="Assoc-Python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Association Rule Mining : </strong> Association Rules
+<a href="Assoc-R.html" target="_blank" rel="noopener">R code </a> and
+<a href="Assoc-Python.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Logistic Regression </strong><a href="Logit-Diag.htm" target="_blank" rel="noopener">Interpretation</a>
+<strong>Logistic Regression
+</strong><a href="Logit-Diag.htm" target="_blank" rel="noopener">Interpretation</a>
 </p>
 </li>
 <li>
 <p>
-<strong>Logistic Regression </strong><a href="logistic.html" target="_blank" rel="noopener">R code </a> , <a href="Logistic-Python.html" target="_blank" rel="noopener">Python code</a> and <a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Sample Interpretation</a>
+<strong>Logistic Regression
+</strong><a href="logistic.html" target="_blank" rel="noopener">R code
+</a> ,
+<a href="Logistic-Python.html" target="_blank" rel="noopener">Python
+code</a> and
+<a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Sample
+Interpretation</a>
 </p>
 </li>
 <li>
 <p>
-<strong>Logistic Regression- Another Python example-admit data</strong> <a href="Logit-admit-python2.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Neural Network Classification : <a href="Classification-ANN-Python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Neural Network Regression : <a href="Regression-ANN-Python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Logistic Regression- Another Python example-admit data</strong>
+<a href="Logit-admit-python2.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
 <ul>
 <li>
 <p>
-<strong>Neural Network Regression : <a href="Regression-ANN-Python.html" target="_blank" rel="noopener">Python code</a>
+<strong>Neural Network Classification :
+<a href="Classification-ANN-Python.html" target="_blank" rel="noopener">Python
+code</a>
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<strong>Neural Network Regression :
+<a href="Regression-ANN-Python.html" target="_blank" rel="noopener">Python
+code</a>
 </p>
 </li>
 </ul>
