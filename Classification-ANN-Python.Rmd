@@ -1,0 +1,67 @@
+---
+title: "Classifucation-ANN-Python"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:\\Users\\User\\anaconda3\\python.exe')
+```
+```{python}
+import pandas as pd
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix,accuracy_score,classification_report
+
+```
+```{python}
+#Import and Examine
+mydata=pd.read_csv('renege.csv')
+print(mydata.shape)
+print(mydata.head(5))
+print(mydata.dtypes)
+
+```
+```{python}
+#Set categorical columns
+cat_columns=('gender','Source','Educ','previous','location')
+for col in cat_columns:
+    print("Columnname=",col)
+    mydata[col] = mydata[col].astype('category')
+
+df_new =pd.get_dummies(mydata, columns=['gender','Source','Educ','previous','location'],prefix=['gender_','Source_','Educ_','previous_','location_'],drop_first=True)
+print(df_new.head(5))
+print(df_new.dtypes)
+```
+```{python}
+
+#Retain only relevant variables
+#drop id column
+df_new=df_new.drop(columns=["CID"])
+min_max_scaler = MinMaxScaler()
+df_new[["age", "workexp"]] = min_max_scaler.fit_transform(df_new[["age", "workexp"]])
+print(df_new.head(5))
+
+```
+```{python}
+Y=df_new.Joined
+X=df_new[['workexp',	'age',	'gender__M',	'Source__2-Referral',	'Source__3-SocialMedia',	'Educ__e2',	'previous__Yes',	'location__L2',	'location__L3',	'location__L4',	'location__L5',	'location__L7',
+]]
+X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=0.3,random_state=1)
+
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
+m = MLPClassifier(solver="sgd",learning_rate_init=0.028,learning_rate="constant",hidden_layer_sizes=(1, 9), activation = 'logistic',random_state=1,max_iter=500)
+m.fit(X_train, y_train)
+m
+
+#Predicting y for X_val
+y_pred = m.predict(X_test)
+cm = confusion_matrix(y_pred, y_test)
+
+#Printing the accuracy
+print(cm)
+print(accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+```

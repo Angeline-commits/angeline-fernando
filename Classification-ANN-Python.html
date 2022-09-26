@@ -11,7 +11,7 @@
 
 
 
-<title>teaching.knit</title>
+<title>Classifucation-ANN-Python</title>
 
 <script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -279,120 +279,127 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Classifucation-ANN-Python</h1>
 
 </div>
 
 
-<h1>
-Teaching
-</h1>
-<h2>
-Business Analytics
-</h2>
-<p>
- 
-</p>
-<ul>
-<li>
-<p>
-<strong>Data Quality</strong> <a href="Data Quality Report.htm" target="_blank" rel="noopener">Data Quality Report</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>EDA with libraries</strong> <a href="EDA-r.html" target="_blank" rel="noopener">R code </a> and <a href="EDA-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Simple Summary </strong> <a href="descriptive-r.html" target="_blank" rel="noopener">R code </a> and <a href="descriptive-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Univariate </strong><a href="univariate-r.html" target="_blank" rel="noopener">R code </a> and <a href="univariate-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Descriptive Analytics-Bivariate </strong><a href="bivariate-r.html" target="_blank" rel="noopener">R code </a> and <a>Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-Types and Applications <a href="shopping-kmeans.html" target="_blank" rel="noopener">R code </a> and <a href="shopping-kmeans-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-Example2-Wine <a href="wine-kmeans.html" target="_blank" rel="noopener">R code </a> and <a href="wine-kmeans-python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Cluster Analysis : </strong> Cluster Analysis-PAM <a href="whole-sale-medoids-file.html" target="_blank" rel="noopener">R code </a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Association Rule Mining : </strong> Association Rules <a href="Assoc-R.html" target="_blank" rel="noopener">R code </a> and <a href="Assoc-Python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Logistic Regression </strong><a href="Logit-Diag.htm" target="_blank" rel="noopener">Interpretation</a>
-</p>
-</li>
-<li>
-<p>
-<strong>Logistic Regression </strong><a href="logistic.html" target="_blank" rel="noopener">R code </a> , <a href="Logistic-Python.html" target="_blank" rel="noopener">Python code</a> and <a href="Logistic_Interpretation1.pdf" target="_blank" rel="noopener">Sample Interpretation</a>
-</p>
-</li>
-<li>
-<p>
-<strong>Logistic Regression- Another Python example-admit data</strong> <a href="Logit-admit-python2.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Neural Network Classification : <a href="Classification-ANN-Python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Neural Network Regression : <a href="Regression-ANN-Python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
-<ul>
-<li>
-<p>
-<strong>Neural Network Regression : <a href="Regression-ANN-Python.html" target="_blank" rel="noopener">Python code</a>
-</p>
-</li>
-</ul>
+<pre class="python"><code>import pandas as pd
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix,accuracy_score,classification_report</code></pre>
+<pre class="python"><code>#Import and Examine
+mydata=pd.read_csv(&#39;renege.csv&#39;)
+print(mydata.shape)</code></pre>
+<pre><code>## (7569, 9)</code></pre>
+<pre class="python"><code>print(mydata.head(5))</code></pre>
+<pre><code>##            CID  workexp  age gender  ... Educ previous location      Joined
+## 0  C2015UUGM44        3   32      F  ...   e2      Yes       L4  Not Joined
+## 1  C20152LRE59        3   37      M  ...   e1      Yes       L5      Joined
+## 2  C20156UMBMO        4   36      F  ...   e2      Yes       L1  Not Joined
+## 3  C2015LZSL81        3   44      M  ...   e1      Yes       L3      Joined
+## 4  C2015JFDHT1        4   43      M  ...   e1      Yes       L1      Joined
+## 
+## [5 rows x 9 columns]</code></pre>
+<pre class="python"><code>print(mydata.dtypes)</code></pre>
+<pre><code>## CID         object
+## workexp      int64
+## age          int64
+## gender      object
+## Source      object
+## Educ        object
+## previous    object
+## location    object
+## Joined      object
+## dtype: object</code></pre>
+<pre class="python"><code>#Set categorical columns
+cat_columns=(&#39;gender&#39;,&#39;Source&#39;,&#39;Educ&#39;,&#39;previous&#39;,&#39;location&#39;)
+for col in cat_columns:
+    print(&quot;Columnname=&quot;,col)
+    mydata[col] = mydata[col].astype(&#39;category&#39;)</code></pre>
+<pre><code>## Columnname= gender
+## Columnname= Source
+## Columnname= Educ
+## Columnname= previous
+## Columnname= location</code></pre>
+<pre class="python"><code>df_new =pd.get_dummies(mydata, columns=[&#39;gender&#39;,&#39;Source&#39;,&#39;Educ&#39;,&#39;previous&#39;,&#39;location&#39;],prefix=[&#39;gender_&#39;,&#39;Source_&#39;,&#39;Educ_&#39;,&#39;previous_&#39;,&#39;location_&#39;],drop_first=True)
+print(df_new.head(5))</code></pre>
+<pre><code>##            CID  workexp  age  ... location__L4  location__L5  location__L7
+## 0  C2015UUGM44        3   32  ...            1             0             0
+## 1  C20152LRE59        3   37  ...            0             1             0
+## 2  C20156UMBMO        4   36  ...            0             0             0
+## 3  C2015LZSL81        3   44  ...            0             0             0
+## 4  C2015JFDHT1        4   43  ...            0             0             0
+## 
+## [5 rows x 14 columns]</code></pre>
+<pre class="python"><code>print(df_new.dtypes)</code></pre>
+<pre><code>## CID                      object
+## workexp                   int64
+## age                       int64
+## Joined                   object
+## gender__M                 uint8
+## Source__2-Referral        uint8
+## Source__3-SocialMedia     uint8
+## Educ__e2                  uint8
+## previous__Yes             uint8
+## location__L2              uint8
+## location__L3              uint8
+## location__L4              uint8
+## location__L5              uint8
+## location__L7              uint8
+## dtype: object</code></pre>
+<pre class="python"><code>
+#Retain only relevant variables
+#drop id column
+df_new=df_new.drop(columns=[&quot;CID&quot;])
+min_max_scaler = MinMaxScaler()
+df_new[[&quot;age&quot;, &quot;workexp&quot;]] = min_max_scaler.fit_transform(df_new[[&quot;age&quot;, &quot;workexp&quot;]])
+print(df_new.head(5))</code></pre>
+<pre><code>##     workexp       age      Joined  ...  location__L4  location__L5  location__L7
+## 0  0.333333  0.333333  Not Joined  ...             1             0             0
+## 1  0.333333  0.611111      Joined  ...             0             1             0
+## 2  0.666667  0.555556  Not Joined  ...             0             0             0
+## 3  0.333333  1.000000      Joined  ...             0             0             0
+## 4  0.666667  0.944444      Joined  ...             0             0             0
+## 
+## [5 rows x 13 columns]</code></pre>
+<pre class="python"><code>Y=df_new.Joined
+X=df_new[[&#39;workexp&#39;,    &#39;age&#39;,  &#39;gender__M&#39;,    &#39;Source__2-Referral&#39;,   &#39;Source__3-SocialMedia&#39;,    &#39;Educ__e2&#39;, &#39;previous__Yes&#39;,    &#39;location__L2&#39;, &#39;location__L3&#39;, &#39;location__L4&#39;, &#39;location__L5&#39;, &#39;location__L7&#39;,
+]]
+X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=0.3,random_state=1)
+
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
+m = MLPClassifier(solver=&quot;sgd&quot;,learning_rate_init=0.028,learning_rate=&quot;constant&quot;,hidden_layer_sizes=(1, 9), activation = &#39;logistic&#39;,random_state=1,max_iter=500)
+m.fit(X_train, y_train)</code></pre>
+<pre><code>## MLPClassifier(activation=&#39;logistic&#39;, hidden_layer_sizes=(1, 9),
+##               learning_rate_init=0.028, max_iter=500, random_state=1,
+##               solver=&#39;sgd&#39;)</code></pre>
+<pre class="python"><code>m
+
+#Predicting y for X_val</code></pre>
+<pre><code>## MLPClassifier(activation=&#39;logistic&#39;, hidden_layer_sizes=(1, 9),
+##               learning_rate_init=0.028, max_iter=500, random_state=1,
+##               solver=&#39;sgd&#39;)</code></pre>
+<pre class="python"><code>y_pred = m.predict(X_test)
+cm = confusion_matrix(y_pred, y_test)
+
+#Printing the accuracy
+print(cm)</code></pre>
+<pre><code>## [[ 779  108]
+##  [ 295 1089]]</code></pre>
+<pre class="python"><code>print(accuracy_score(y_test, y_pred))</code></pre>
+<pre><code>## 0.8225451343020695</code></pre>
+<pre class="python"><code>print(classification_report(y_test, y_pred))</code></pre>
+<pre><code>##               precision    recall  f1-score   support
+## 
+##       Joined       0.88      0.73      0.79      1074
+##   Not Joined       0.79      0.91      0.84      1197
+## 
+##     accuracy                           0.82      2271
+##    macro avg       0.83      0.82      0.82      2271
+## weighted avg       0.83      0.82      0.82      2271</code></pre>
 
 <div id="footer">
 <p>Copyright &copy; 2022,  Angeline Fernando,  All rights reserved.</p>
