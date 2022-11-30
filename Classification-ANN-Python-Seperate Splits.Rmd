@@ -42,12 +42,15 @@ min_max_scaler = MinMaxScaler()
 X_train[["age", "workexp"]] = min_max_scaler.fit_transform(X_train[["age", "workexp"]])
 
 
-df_new =pd.get_dummies(X_train, columns=['gender','Source','Educ','previous','location'],prefix=['gender_','Source_','Educ_','previous_','location_'],drop_first=True)
+X_train =pd.get_dummies(X_train, columns=['gender','Source','Educ','previous','location'],prefix=['gender_','Source_','Educ_','previous_','location_'],drop_first=True)
 
 #https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
 m = MLPClassifier(solver="sgd",learning_rate_init=0.028,learning_rate="constant",hidden_layer_sizes=(1, 9), activation = 'logistic',random_state=1,max_iter=500)
 m.fit(X_train, y_train)
 m
+X_test[["age", "workexp"]] = min_max_scaler.fit_transform(X_train[["age", "workexp"]])
+X_test =pd.get_dummies(X_test, columns=['gender','Source','Educ','previous','location'],prefix=['gender_','Source_','Educ_','previous_','location_'],drop_first=True)
+
 
 #Predicting y for X_val
 y_pred = m.predict(X_test)

@@ -1,0 +1,26 @@
+---
+title: "Classification-ANN-Python"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+library(reticulate)
+use_python('E:\\Users\\User\\anaconda3\\python.exe')
+```
+```{python}
+import pandas as pd
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix,accuracy_score,classification_report
+
+```
+```{python}
+#Import and Examine
+mydata=pd.read_csv('renege.csv')
+print(type(mydata))
+print(mydata.shape)
+print(mydata.head(5))
+print(mydata.dtypes)
+
+```
