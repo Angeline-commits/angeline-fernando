@@ -13,7 +13,7 @@
 
 <title>index.knit</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -181,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -190,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -303,18 +296,12 @@ $(document).ready(function () {
   gtag('config', 'G-KK7K26EJP8');
 </script>
 </head>
-<p>I have two major research interests. My primary interest is digital
-marketing, specifically in understanding online consumer behaviour and
-using analytics to gain consumer intelligence from social media.My
-secondary interest is motivated by the attitude-behaviour gap in
-environmentally-conscious consumer behaviour. I develop practical
-solutions to encourage this behaviour. Most of my research questions are
-therefore framed in these two contexts and I investigate the answer to
-these questions using experimental, cross-sectional and qualitative
-research .</p>
+<p>My primary interest research interest is related to understanding
+online consumer behaviour and using analytics to gain consumer
+intelligence from social media.</p>
 
 <div id="footer">
-<p>Copyright &copy; 2022,  Angeline Fernando,  All rights reserved.</p>
+<p>Copyright &copy; 2023,  Angeline Fernando,  All rights reserved.</p>
 </div>
 
 
